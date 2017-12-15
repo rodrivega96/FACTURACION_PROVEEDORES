@@ -1,0 +1,336 @@
+<div class="jumbotron text-center">
+	<table class="table table-bordered table-hover table-condensed">
+		<tr>
+			<td>
+				<h4>No mostrar nada hasta que no se aplique algun filtro</h4>
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<tr>
+						<td width="10%"><label name="clienteL">Cliente</label></td>
+						<td width="32%"><input style="width: 100%" type="text"
+							name="cliente" value="autocompletar" /></td>
+						<td width="10%"><label name="proyectoL">Proyecto</label></td>
+						<td width="32%" align="left"><button type="button"
+								class="btn btn-default btn-sm" popover="Buscar Proyecto"
+								popover-trigger="mouseenter" ng-click="findProyect()">
+								<span><img class="img-responsive" src="img/new.png"
+									width='20px' height='20px' /></span>
+							</button></td>
+						<td width="16%" rowspan="4" style="vertical-align: middle;">
+							<button type="button" popover="Buscar"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="loadFilterSearch()">
+								<center>
+									<img class="img-responsive" src="img/search.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+							<button type="button" popover="Limpiar Filtros"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="clearFilter()">
+								<center>
+									<img class="img-responsive" src="img/wiping.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+						</td>
+
+					</tr>
+					<tr>
+						<td><label name="managerL">Manager</label></td>
+						<td align="left"><button type="button"
+								class="btn btn-default btn-sm" popover="Buscar Manager"
+								popover-trigger="mouseenter" ng-click="findManager()">
+								<span><img class="img-responsive" src="img/new.png"
+									width='20px' height='20px' /></span>
+							</button></td>
+						<td><label name="ocL">Nro OC</label></td>
+						<td><input style="width: 100%" type="text" name="nro"
+							ng-model="extFilter.nro" /></td>
+					</tr>
+					<tr>
+						<td><label name="fechaDesdeL">Fecha Desde</label></td>
+						<td><input style="width: 100%" type="text" name="date"
+							id="fechaDesdeId" ng-model="extFilter.fechaDesde" /></td>
+						<td><label name="fechaHastaL">Fecha Hasta</label></td>
+						<td><input style="width: 100%" type="text" name="date"
+							id="fechaHastaId" ng-model="extFilter.fechaHasta" /></td>
+					</tr>
+					<tr>
+						<td><label name="statePreFacL">Estado PreFac</label></td>
+						<td><select class="max-width" name="StatePreFac"
+							style="width: 100%;" ng-model="valueStatePreFacFilter"
+							id="idStatePreFac" tabindex="3">
+								<option value="{{state.id}}" ng-repeat="state in preFacStates">{{state.name}}</option>
+						</select></td>
+						<td><label name="stateOCL">Estado OC</label></td>
+						<td><select class="max-width" name="state"
+							style="width: 100%;" ng-model="valueStateFilter" id="idState"
+							tabindex="3">
+								<option value="{{state.id}}" ng-repeat="state in states">{{state.name}}</option>
+						</select></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><tabset> <tab heading="Pre Facturacion">
+				<table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th style="text-align: center;">ID Prefa</th>
+							<th style="text-align: center;">Cliente</th>
+							<th style="text-align: center;">Proyecto</th>
+							<th style="text-align: center;">Manager</th>
+							<th style="text-align: center;">Descripcion</th>
+							<th style="text-align: center;">Período</th>
+							<th style="text-align: center;">Importe</th>
+							<th style="text-align: center;">Estado</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="prefac in prefas" ng-switch
+						on="dataCollapsePreFac[$index]" class="animate-repeat">
+						<tr title="Click para ver mas datos de la PreFac." id="{{$index}}"
+							style="background-color: #CACACA;"
+							ng-click="selectTableRowPreFac($index)">
+							<td style="cursor: pointer;">{{prefac.id}}</td>
+							<td style="cursor: pointer;">{{prefac.client}}</td>
+							<td style="cursor: pointer;">{{prefac.proyect}}</td>
+							<td style="cursor: pointer;">{{prefac.manager}}</td>
+							<td style="cursor: pointer;">{{prefac.description}}</td>
+							<td style="cursor: pointer;">{{prefac.periodo}}</td>
+							<td style="cursor: pointer;">{{prefac.amount}}</td>
+							<td style="cursor: pointer;">{{prefac.state}}</td>
+						</tr>
+						<tr ng-switch-when="true">
+							<td colspan="8">
+								<h4>Personas</h4>
+								<table
+									class="table table-striped table-bordered table-hover table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Nombre</th>
+											<th style="text-align: center;">Importe</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="people in peoples">
+											<td>{{people.name}}</td>
+											<td>{{people.amount}}</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th style="vertical-align: middle;">Total</th>
+											<th style="text-align: left; vertical-align: middle;"
+												colspan="4"><output>${{totalPeople}}</output></th>
+										</tr>
+									</tfoot>
+								</table>
+								<h4>OC Asociadas</h4>
+								<table
+									class="table table-striped table-bordered table-hover table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Numero</th>
+											<th style="text-align: center;">Concepto</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="oc in preFacOCs">
+											<td>{{oc.nro}}</td>
+											<td>{{oc.concept}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</tab> <tab heading="Ordenes de Compra">
+				<table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th style="text-align: center;">Nro OC</th>
+							<th style="text-align: center;">Cliente</th>
+							<th style="text-align: center;">Concepto</th>
+							<th style="text-align: center;">Fecha</th>
+							<th style="text-align: center;">Monto</th>
+							<th style="text-align: center;">Estado</th>
+							<th style="text-align: center;">Total</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="oc in ocs" ng-switch
+						on="dataCollapseOC[$index + 10000]" class="animate-repeat">
+						<tr title="Click para ver mas datos de la OC."
+							id="{{$index + 10000}}" style="background-color: #CACACA;"
+							ng-click="selectTableRowOC($index)">
+							<td style="cursor: pointer;">{{oc.numberOC}}</td>
+							<td style="cursor: pointer;">{{oc.client}}</td>
+							<td style="cursor: pointer;">{{oc.concepto}}</td>
+							<td style="cursor: pointer;">{{oc.date}}</td>
+							<td style="cursor: pointer;">{{oc.monto}}</td>
+							<td style="cursor: pointer;">{{oc.state}}</td>
+							<td style="cursor: pointer;">{{oc.total}}</td>
+						</tr>
+						<tr ng-switch-when="true">
+							<td colspan="7">
+								<h4>Facturas</h4>
+								<table
+									class="table table-striped table-bordered table-hover table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Nro Factura</th>
+											<th style="text-align: center;">Nro Recepcion</th>
+											<th style="text-align: center;">Importe</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="fac in facturas">
+											<td>{{fac.number}}</td>
+											<td>{{fac.reception}}</td>
+											<td>${{fac.amount}}</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th style="vertical-align: middle;">Total</th>
+											<th style="text-align: left; vertical-align: middle;"
+												colspan="4"><output>${{totalFactura}}</output></th>
+										</tr>
+									</tfoot>
+								</table>
+								<h4>Archivos</h4>
+								<table class="table table-striped table-bordered table-hover"
+									show-filter="true" ng-table="tableFile">
+									<tr ng-repeat="file in $data">
+										<td width="60%" data-title="'Archivo'"
+											filter="{ 'name': 'text' }"><output
+												ng-click="download(file)">
+												<a href="javascript:">{{file.name}}</a>
+											</output></td>
+										<td width="40%" data-title="'Tipo'"
+											filter="{ 'type': 'text' }"><output>{{file.type}}</output></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</tab></tabset></td>
+		</tr>
+	</table>
+
+	<table class="table table-bordered">
+		<tr>
+			<td style="text-align: center;"><button type="button"
+					class="btn btn-primary" ng-click="go('/')">Menú Principal</button></td>
+		</tr>
+	</table>
+</div>
+
+<div class="ng-modal-dialog modal-wait"
+	ng-show="modalFindManager || modalFindProyect"></div>
+
+<!-- INICIO MODAL BUSCAR PROYECTO -->
+<div id="modalFindProyectId" ng-show="modalFindProyect"
+	class="ng-modal-emergente">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" ng-click="closeFindProyect()" class="close"
+				data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Buscar Proyecto</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<form name="form-find-proyect" id="formFindProyect"
+					ng-submit="closeFindProyect()">
+					<table class="table table-striped table-bordered table-hover">
+						<tr>
+							<th width="10%">Nombre</th>
+							<td width="70%"><input type="text" name="name"
+								style="width: 100%;" align="left" ng-model="findProyect.name" /></td>
+							<td width="20%" rowspan="2" style="vertical-align: middle;"><button
+									type="button" class="btn btn-default btn-sm" popover="Buscar"
+									popover-trigger="mouseenter" ng-click="proyectFilterSearch()">
+									<img class="img-responsive" src="img/search.png" width='20px'
+										height='20px' />
+								</button></td>
+						</tr>
+						<tr>
+							<th width="10%">Activo</th>
+							<td width="70%"><select name="activo"
+								class="max-width form-control" ng-model="findProyect.activo">
+									<option value="-"></option>
+									<option value="{{activo.id}}" ng-repeat="activo in siNo">{{activo.name}}</option>
+							</select></td>
+						</tr>
+					</table>
+					<table ng-table="tableFindProyect"
+						class="table table-striped table-bordered table-hover">
+						<tr ng-repeat="proyect in $data">
+							<td width="10%" data-title="'Elegir'"><input type="radio"
+								name="group"></td>
+							<td width="45%" data-title="'Nombre'"><output>{{proyect.name}}</output></td>
+							<td width="45%" data-title="'Activo'"><output>{{proyect.activo}}</output></td>
+						</tr>
+					</table>
+					<div class="modal-footer">
+						<button type="button" ng-click="closeFindProyect()"
+							class="btn btn-default" data-dismiss="modal" tabindex="5">Cerrar</button>
+						<input type='submit' class="btn btn-primary" value="Aceptar"
+							tabindex="4" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- FIN MODAL BUSCAR PROYECTO -->
+
+<!-- INICIO MODAL BUSCAR MANAGER -->
+<div id="modalFindManagerId" ng-show="modalFindManager"
+	class="ng-modal-emergente">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" ng-click="closeFindManager()" class="close"
+				data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Buscar Propuestas</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<form name="form-find-manager" id="formFindManager"
+					ng-submit="closeFindManager()">
+					<table class="table table-striped table-bordered table-hover">
+						<tr>
+							<th width="10%">Nombre</th>
+							<td width="70%"><input type="text" name="name"
+								ng-model="findManager.name" style="width: 100%;" align="left" /></td>
+							<td width="20%" style="vertical-align: middle;"><button
+									type="button" class="btn btn-default btn-sm" popover="Buscar"
+									popover-trigger="mouseenter" ng-click="proyectFilterSearch()">
+									<img class="img-responsive" src="img/search.png" width='20px'
+										height='20px' />
+								</button></td>
+						</tr>
+					</table>
+					<table ng-table="tableFindManager"
+						class="table table-striped table-bordered table-hover">
+						<tr ng-repeat="manager in $data">
+							<td width="10%" data-title="'Elegir'"><input type="radio"
+								name="group"></td>
+							<td width="30%" data-title="'Nombre'"><output>{{manager.name}}</output></td>
+						</tr>
+					</table>
+					<div class="modal-footer">
+						<button type="button" ng-click="closeFindManager()"
+							class="btn btn-default" data-dismiss="modal" tabindex="5">Cerrar</button>
+						<input type='submit' class="btn btn-primary" value="Aceptar"
+							tabindex="4" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- FIN MODAL BUSCAR MANAGER -->

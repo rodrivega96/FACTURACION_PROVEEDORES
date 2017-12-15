@@ -1,0 +1,122 @@
+<script type='text/javascript' src="protected/proveedor/ProveedorModel.js"></script>
+<script type='text/javascript' src="protected/proveedor/ProveedorController.js"></script>
+<div class="jumbotron text-center">
+	<table
+		class="table table-striped table-bordered table-hover table-condensed">
+		<tr>
+			<td>
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<tr>
+						<td width="20%"><label name="razonSocial">Razon Social</label></td>
+						<td width="60%" align="left"><input style="width: 100%" type="text"
+							id="razonSocialId" tabindex="1" 
+							ng-model="filter.razonSocial"
+							 /></td>
+						<td width="20%" rowspan="5" style="vertical-align: middle;">
+							<button type="button" popover="Buscar" tabindex="4"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="loadFilterSearch()">
+								<center>
+									<img class="img-responsive" src="img/search.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+							<button type="button" popover="Limpiar Filtros" tabindex="5"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="clearFilter()">
+								<center>
+									<img class="img-responsive" src="img/wiping.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+							<button type="button" popover="Agregar Proveedor"
+								tabindex="6" popover-trigger="mouseenter"
+								class="btn btn-default btn-sm"
+								ng-click="go('/proveedor-admin/proveedor-form')">
+								<center>
+									<img class="img-responsive" src="img/new.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td width="20%"><label name="cuit">CUIT</label></td>
+						<td width="60%" align="left"><input style="width: 100%" type="text"
+							id="cuitId" tabindex="2" 
+							ng-model="filter.cuit"
+							 /></td>
+					</tr>
+					<tr>
+						<td width="20%"><label name="medioPago">Medio de Pago</label></td>
+						<td width="60%" align="left">
+						<select name="medioPagoDefecto"
+							ng-model="filter.medioPago" tabindex="3"
+							class="max-width" style="width: 80%;" id="medioPagoDefectoId"
+							ng-options="medioPago.id as medioPago.nombre for medioPago in mediosPago">
+							<option value="">-</option>
+							</select>
+						</td>
+					</tr>
+					
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td align="right"><b>{{count}}</b></td>
+		</tr>
+		<tr>
+			<td><table
+					class="table table-striped table-bordered table-hover table-condensed animation-table">
+					<thead>
+						<tr>
+							<th style="text-align: center;">Razon Social</th>
+							<th style="text-align: center;">CUIT</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="prov in proveedores">
+							<td width="30%">{{prov.razonSocial}}</td>
+							<td width="30%">{{prov.cuit}}</td>
+							<td width="40%" style="text-align: center;">
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Modificar" popover-trigger="mouseenter"
+									ng-click="goEdit('/proveedor-admin/proveedor-edit', prov.id)">
+									<span><img class="img-responsive" src="img/edit.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm"
+									tabindex="10" popover="Eliminar" popover-trigger="mouseenter"
+									ng-click="goDelete(prov.id)">
+									<span><img class="img-responsive" src="img/delete.png"
+										width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot ng-if="filter.totalPages!=0">
+						<tr>
+							<td colspan="10" paginated-button paginatedname="paginatedProvName" paginatedfilter="filterName">
+							</td>
+						</tr>
+					</tfoot>
+					<tr>
+						<td colspan="8">
+							<div ng-show="messageFilterProv"
+								class="alert alert-dismissable alert-warning text-center">
+								<strong>{{warningFilterOCMessage}}</strong>
+							</div>
+						</td>
+					</tr>
+				</table></td>
+		</tr>
+	</table>
+	<table class="table table-bordered">
+		<tr>
+			<td style="text-align: center;"><button type="button"
+					tabindex="11" class="btn btn-primary" ng-click="go('/')">Menú
+					Principal</button></td>
+		</tr>
+	</table>
+</div>

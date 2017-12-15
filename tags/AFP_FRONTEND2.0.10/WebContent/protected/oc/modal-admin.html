@@ -1,0 +1,194 @@
+<div class="ng-modal-dialog modal-wait"
+	ng-show="modalFindProposal || modalFindProject"></div>
+<!-- INICIO MODAL BUSCAR PROYECTO -->
+<div id="modalFindProjectId" ng-show="modalFindProject"
+	after-show="afterShowt()" my-show="modalFindProject"
+	class="ng-modal-emergente modalTableDiv">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" ng-click="closeFindProject()" class="close"
+				tabindex="106" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Buscar Proyecto</h4>
+		</div>
+		<form name="form-find-project" id="formFindProject"
+			ng-init="showFilterProject=true">
+			<div class="modal-body">
+				<div class="text-center">
+					<table>
+						<tr>
+							<td>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Ocultar Filtros"
+									data-trigger="hover" ng-show="showFilterProject"
+									ng-click="showFilterProject=false">
+									<span><img class="img-responsive" src="img/minus.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Mostrar Filtros"
+									data-trigger="hover" ng-show="!showFilterProject"
+									ng-click="showFilterProject=true">
+									<span><img class="img-responsive" src="img/plus.png"
+										width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showFilterProject"
+						class="table table-striped table-bordered table-hover">
+						<tr>
+							<th width="10%" style="vertical-align: middle;">Nombre</th>
+							<td width="70%"><input type="text" name="name" id="nameId"
+								tabindex="101" style="width: 100%;" align="left"
+								class="form-control" ng-model="filterProject.nombre" /></td>
+							<td width="20%" rowspan="2" style="vertical-align: middle;"><button
+									type="button" class="btn btn-default btn-sm" popover="Buscar"
+									tabindex="103" popover-trigger="mouseenter"
+									ng-click="projectFilterSearch()">
+									<img class="img-responsive" src="img/search.png" width='20px'
+										height='20px' />
+								</button></td>
+						</tr>
+						<tr>
+							<th width="10%" style="vertical-align: middle;">Activo</th>
+							<td width="70%"><select name="activo" tabindex="102"
+								class="max-width form-control" ng-model="filterProject.activo">
+									<option value="{{activo.id}}" ng-repeat="activo in activos">{{activo.name}}</option>
+							</select></td>
+						</tr>
+					</table>
+					<div ng-if="showTableFindProject">
+						<table ng-table="tableFindProject"
+							class="table table-striped table-bordered table-hover">
+							<tr ng-repeat="project in $data">
+								<td width="10%" data-title="''"><input type="radio"
+									ng-checked="selected(project.id, filter.proyectoId)"
+									name="groupProject" ng-click="radioCheckProject(project)"></td>
+								<td width="45%" data-title="'Nombre'"><output>{{project.nombre}}</output></td>
+								<td width="45%" data-title="'Activo'"><output>{{project.activo}}</output></td>
+							</tr>
+						</table>
+					</div>
+					<div ng-show="findProjectMessage"
+						class="alert alert-dismissable alert-warning text-center">
+						<strong>{{warningFindProjectMessage}}</strong>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" ng-click="closeFindProject()"
+					class="btn btn-default" data-dismiss="modal" tabindex="105">Cerrar</button>
+				<button type="button" ng-click="acceptFindProject()"
+					class="btn btn-primary" data-dismiss="modal" tabindex="106">Aceptar</button>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- FIN MODAL BUSCAR PROYECTO -->
+
+<!-- INICIO MODAL BUSCAR PROPUESTA -->
+<div id="modalFindProposalId" class="ng-modal-emergente modalTableDiv"
+	ng-show="modalFindProposal" after-show="afterShow()"
+	my-show="modalFindProposal">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" ng-click="closeFindProposal()" class="close"
+				tabindex="208" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Buscar Propuestas</h4>
+		</div>
+		<form name="form-find-proposal" id="formFindProposal"
+			ng-init="showFilterProposal=true">
+			<div class="modal-body">
+				<div class="text-center">
+					<table>
+						<tr>
+							<td>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Ocultar Filtros"
+									data-trigger="hover" ng-show="showFilterProposal"
+									ng-click="showFilterProposal=false">
+									<span><img class="img-responsive" src="img/minus.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Mostrar Filtros"
+									data-trigger="hover" ng-show="!showFilterProposal"
+									ng-click="showFilterProposal=true">
+									<span><img class="img-responsive" src="img/plus.png"
+										width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showFilterProposal"
+						class="table table-striped table-bordered table-hover">
+						<tr>
+							<th width="15%" style="vertical-align: middle;">Descripción</th>
+							<td width="30%"><input type="text" class="form-control"
+								tabindex="201" id="descriptionId" name="description"
+								style="width: 100%;" align="left"
+								ng-model="filterProposal.descripcion" /></td>
+							<th width="15%" style="vertical-align: middle;">Nombre
+								Comercial</th>
+							<td width="30%"><input type="text" name="name"
+								style="width: 100%;" align="left" class="form-control"
+								tabindex="202" ng-model="filterProposal.comercial" /></td>
+							<td width="10%" rowspan="2" style="vertical-align: middle;"><button
+									type="button" class="btn btn-default btn-sm" popover="Buscar"
+									tabindex="205" popover-trigger="mouseenter"
+									ng-click="proposalFilterSearch()">
+									<img class="img-responsive" src="img/search.png" width='20px'
+										height='20px' />
+								</button></td>
+						</tr>
+						<tr>
+							<th width="10%" style="vertical-align: middle;"><label
+								name="fechaVigenciaDesdeL">Fecha Desde</label></th>
+							<td width="30%" style="vertical-align: middle;"><input
+								tabindex="203" type="text" id="fechaVigenciaDesdeIdOCP"
+								name="datepicker" date-picker-ng
+								max-date-picker="filterProposal.fechaVigenciaHasta"
+								class="form-control clsDatePicker"
+								ng-model="filterProposal.fechaVigenciaDesde"
+								oninput="this.value=''" /></td>
+							<th width="10%" style="vertical-align: middle;"><label
+								name="fechaVigenciaHastaL">Fecha Hasta</label></th>
+							<td width="30%" style="vertical-align: middle;"><input
+								tabindex="204" date-picker-ng
+								min-date-picker="filterProposal.fechaVigenciaDesde" type="text"
+								name="datepicker" oninput="this.value=''"
+								class="form-control clsDatePicker" id="fechaVigenciaHastaIdOCP"
+								ng-model="filterProposal.fechaVigenciaHasta" /></td>
+						</tr>
+					</table>
+					<div ng-if="showTableFindProposal">
+						<table ng-table="tableFindProposal"
+							class="table table-striped table-bordered table-hover">
+							<tr ng-repeat="proposal in $data">
+								<td width="10%" data-title="''"><input type="radio"
+									ng-checked="selected(proposal.id, filter.propuestaId)"
+									ng-click="radioCheckProposal(proposal)" name="groupProposal"></td>
+								<td width="30%" data-title="'Descripcion'"><output>{{proposal.descripcion}}</output></td>
+								<td width="15%" data-title="'Fecha vigencia Desde'"><output>{{proposal.fechaDesde}}</output></td>
+								<td width="15%" data-title="'Fecha vigencia Hasta'"><output>{{proposal.fechaHasta}}</output></td>
+								<td width="30%" data-title="'Nombre Comercial'"><output>{{proposal.comercial}}</output></td>
+							</tr>
+						</table>
+					</div>
+					<div ng-show="findProposalMessage"
+						class="alert alert-dismissable alert-warning text-center">
+						<strong>{{warningFindProposalMessage}}</strong>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" ng-click="closeFindProposal()"
+					class="btn btn-default" data-dismiss="modal" tabindex="207">Cerrar</button>
+				<button type="button" ng-click="acceptFindProposal()"
+					class="btn btn-primary" data-dismiss="modal" tabindex="208">Aceptar</button>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- FIN MODAL PROPUESTA -->

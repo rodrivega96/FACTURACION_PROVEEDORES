@@ -1,0 +1,51 @@
+################### Session Configuration ##########################
+session.id.descriptor=vates-session-id
+
+################### Unique ID generator type ##########################
+generatorType=uuid
+
+################### DataSource Configuration ##########################
+jdbc.driverClassName=oracle.jdbc.OracleDriver
+jdbc.url=jdbc:oracle:thin:@192.168.50.58:1521:DESA10G
+jdbc.username=facpro
+jdbc.password=facpro
+jdbc.maxPoolSize=50
+jdbc.minPoolSize=2
+init-db=false
+
+################### Hibernate Configuration ##########################
+orm.dialect=org.hibernate.dialect.OracleDialect
+orm.show_sql=true
+orm.format_sql=true
+orm.generate_ddl=true
+
+################### Mail Configuration ##########################
+mail.auth=false
+mail.starttls.enable=false 
+mail.host=192.168.50.26
+mail.port=25
+mail.address=afp@vates.com
+mail.pass=pass
+mail.user=mail
+mail.transport.protocol= smtp
+
+################### LDAP Configuration ##########################
+ldap.domain=vates.org
+ldap.host=192.168.50.10
+ldap.port=389
+ldap.user=afp ldap
+ldap.pass=%%vates2015%%
+ldap.vates=VATESSA
+ldap.ssl=false
+
+################### JOBS Configuration ##########################
+################### Sec Min Hr Day-of-Month Month Day-of-Week Year##########################
+#Se ejecuta a las 7 de la mañana todos los lunes:
+pending.cron.rate=0 0 7 * * 1
+
+#Se ejecuta a las 7 de la mañana cada 2 dias a partir del primer dia del mes:
+expired.cron.rate =   0  0  7  1/2  *  ? 
+
+################### File Configuration ##########################
+file.max.size = 5242880
+##5MB

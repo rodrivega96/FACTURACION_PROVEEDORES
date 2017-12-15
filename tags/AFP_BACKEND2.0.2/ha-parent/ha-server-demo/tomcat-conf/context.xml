@@ -1,0 +1,7 @@
+
+<ResourceLink
+    name="jdbc/ha"
+    global="jdbc/ha"
+    auth="Container"
+    type="javax.sql.DataSource" />
+                

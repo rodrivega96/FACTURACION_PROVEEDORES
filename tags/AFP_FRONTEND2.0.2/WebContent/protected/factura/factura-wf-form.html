@@ -1,0 +1,122 @@
+<div>
+	<form name="form-wf" ng-submit="saveWF()">
+
+		<table
+			class="table table-striped table-bordered table-hover table-condensed">
+			<tr>
+				<td width="40%">
+					<table
+						class="table table-striped table-bordered table-hover table-condensed">
+						<tr>
+							<td class="text-left size16" colspan="3">Seleccionar
+								autorizador</td>
+						</tr>
+						<tr>
+							<td width="35%">Autorizador:</td>
+							<td width="40%"><select id="userSelectedId"
+								ng-model="userSelected" style="width: 95%"
+								ng-disabled="!editarFactura">
+									<option value="{{user}}" ng-repeat="user in userList">
+										{{user.name}} {{user.lastName}}</option>
+							</select></td>
+
+							<td width="20%"><img ng-show="editarFactura"
+								ng-click="agregarAutorizador();" class="img-responsive"
+								popover="Agregar Autorizador" popover-trigger="mouseenter"
+								style="cursor: pointer;" src="img/new.png" width='20px'
+								height='20px' /></td>
+
+						</tr>
+
+					</table>
+				</td>
+
+				<td width="60%">
+					<table
+						class="table table-striped table-bordered table-hover table-condensed">
+						<tr>
+							<td class="text-left size16">Workflow de Autorización:</td>
+						</tr>
+
+						<tr>
+							<td>
+								<!-- AUTORIZADOS Y RECHAZADOS-->
+								<ul id="idUl">
+									<li class="listaAutorizadores redondeado"
+										ng-repeat="item in autorizadoresList"
+										ng-class="(item.estado == 3) ? 'alert-success' : (item.estado == 2) ? 'alert-danger' : ''">
+
+										<div ng-show="item.estado == 3" popover="Autorizado" popover-trigger="mouseenter">
+											{{item.autorizador.name}} {{item.autorizador.lastName}} <img
+												class="img-responsive" style="float: right;"
+												src="img/wf_authorize.png" width='20px' height='20px' />
+										</div>
+
+										<div ng-show="item.estado == 2" popover="Rechazado" popover-trigger="mouseenter">
+											{{item.autorizador.name}} {{item.autorizador.lastName}} <img
+												class="img-responsive" style="float: right;"
+												src="img/wf_discard.png" width='20px' height='20px' />
+										</div>
+									</li>
+								</ul>
+							</td>
+						</tr>
+
+
+						<tr>
+							<td ng-show="editarFactura">
+								<!-- NO AUTORIZADOS -->
+								<ul dnd-list="autorizadoresList" id="idUl">
+									<li class="listaAutorizadores alert-info redondeado"
+										ng-repeat="item in autorizadoresList" style="cursor: move;">
+										<div ng-show="item.estado == 1" popover="Pendiente">
+											{{item.autorizador.name}} {{item.autorizador.lastName}} <span
+												ng-click="quitarAutorizador(item)"> <img
+												class="img-responsive" popover="Quitar Autorizador"
+												popover-trigger="mouseenter"
+												style="float: right; cursor: pointer;" src="img/delete.png"
+												width='20px' height='20px' />
+											</span>
+										</div>
+									</li>
+								</ul>
+							</td>
+							<td ng-show="!editarFactura">
+								<!-- NO AUTORIZADOS -->
+								<ul id="idUl">
+									<li class="listaAutorizadores alert-info redondeado"
+										ng-repeat="item in autorizadoresList">
+										<div ng-show="item.estado == 1" popover="Pendiente" popover-trigger="mouseenter">
+											{{item.autorizador.name}} {{item.autorizador.lastName}} <img
+												class="img-responsive" style="float: right;"
+												src="img/wf_observe.png" width='20px' height='20px' />
+										</div>
+									</li>
+								</ul>
+							</td>
+						</tr>
+
+					</table>
+
+				</td>
+			</tr>
+		</table>
+
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<td colspan="3" class="text-center">
+					<button ng-show="editarFactura  && init" type='button'
+						class="btn btn-primary" ng-click="saveWF()">Guardar</button>
+					<button ng-show="editarFactura  && init" type='button'
+						class="btn btn-primary ng-hide" ng-click="saveAndPublishWF()">Guardar
+						y Publicar</button>
+					<button ng-show="!editarFactura  && init" type='button'
+						class="btn btn-warning" ng-click="reiniciarWF()">Reiniciar</button>
+					<button ng-show="init" type='button' class="btn btn-primary" ng-class="ng-hide"
+						ng-click="backFacAdm()">Volver</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</div>

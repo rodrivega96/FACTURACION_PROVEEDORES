@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://cxf.apache.org/core"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://cxf.apache.org/jaxrs 
+        http://cxf.apache.org/schemas/jaxrs.xsd
+        http://cxf.apache.org/core 
+        http://cxf.apache.org/schemas/core.xsd">
+
+    <bean
+        id="ha.jsonProvider"
+        class="org.apache.cxf.jaxrs.provider.json.JSONProvider">
+        <property
+            name="dropRootElement"
+            value="false" />
+        <property
+            name="supportUnwrapped"
+            value="false" />
+        <property 
+            name="dropCollectionWrapperElement" 
+            value="true"/>
+        <property 
+            name="serializeAsArray"
+            value="true"/>
+    </bean>
+    <!-- abstract="true" -->
+
+    <jaxrs:server
+        id="ha.security.server"
+        address="/"
+        staticSubresourceResolution="true">
+        <jaxrs:features>
+            <cxf:logging />
+        </jaxrs:features>
+        <jaxrs:serviceBeans>
+        </jaxrs:serviceBeans>
+        <jaxrs:extensionMappings>
+            <entry
+                key="json"
+                value="application/json" />
+            <entry
+                key="xml"
+                value="application/xml" />
+        </jaxrs:extensionMappings>
+        <jaxrs:providers>
+<!--             <ref bean="ha.jsonProvider" /> -->
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
+                <property name="mapper" ref="jacksonMapper" />
+            </bean>
+            <ref bean="security.authorizingFilter" />
+        </jaxrs:providers>
+    </jaxrs:server>
+    
+    <bean id="jacksonMapper" class="org.codehaus.jackson.map.ObjectMapper">
+    </bean>
+
+</beans>

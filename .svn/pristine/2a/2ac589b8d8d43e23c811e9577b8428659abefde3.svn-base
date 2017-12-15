@@ -1,0 +1,63 @@
+<div class="text-center">
+	<form name="form-student" ng-submit="saveAr()">
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<td width="20%" align="left"><label name="name">Apellido
+						y Nombres</label>
+				<td align="left"><output>{{apeNom}}</output>
+			</tr>
+		</table>
+		<table class="table table-striped table-bordered table-hover">
+			<tr ng-show="showTRoles">
+				<td>
+					<table class="table table-striped table-bordered table-hover"
+						ng-table="tableSelectedRoles" show-filter="true">
+						<tr ng-repeat="role in $data">
+							<td width="10%" data-title="'Elegir'"><input type="checkbox"
+								ng-model="role.selected" />
+							<td width="40%" data-title="'Roles'" filter="{ 'name': 'text' }"><output>{{role.name}}</output></td>
+							<td width="50%" data-title="'Descripción'"
+								filter="{ 'description': 'text' }"><output>{{role.description}}</output></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr style="text-align: left;">
+				<td colspan="2">
+					<button type='button' class="btn-primary btn-sm"
+						ng-click="buttonTable()">{{showTable}}</button>
+			</tr>
+			<tr>
+				<td>
+					<table class="table table-striped table-bordered table-hover"
+						ng-table="tableRoles">
+						<thead>
+							<tr>
+								<td width="40%"><label>Roles Asignados</label></td>
+								<td width="60%"><label>Descripción</label></td>
+							</tr>
+						</thead>
+						<tbody ng-repeat="role in $data" ng-if="role.selected">
+							<tr>
+								<td style="vertical-align: super;"><output>{{role.name}}</output></td>
+								<td style="vertical-align: super;"><output>{{role.description}}</output></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table class="table table-bordered table-hover">
+			<tr>
+				<td ng-show="userError"
+					class="alert alert-dismissable alert-warning"><strong>{{showMessage}}</strong></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type='submit' class="btn btn-primary"
+					value="Grabar" />
+					<button type='button' class="btn btn-primary"
+						ng-click="backArAdm()">Volver</button></td>
+			</tr>
+		</table>
+	</form>
+</div>

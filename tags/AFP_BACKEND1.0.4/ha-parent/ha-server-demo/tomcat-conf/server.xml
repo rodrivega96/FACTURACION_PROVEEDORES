@@ -1,0 +1,15 @@
+
+<Resource
+    name="jdbc/ha"
+    global="jdbc/ha"
+    auth="Container"
+    type="javax.sql.DataSource"
+    driverClassName="com.mysql.jdbc.Driver"
+    url="jdbc:mysql://localhost:3306/ha"
+    username="ha"
+    password="ha"
+    maxActive="100"
+    maxIdle="20"
+    minIdle="5"
+    maxWait="10000" />
+      

@@ -1,0 +1,538 @@
+<div class="jumbotron text-center">
+	<table class="table table-bordered table-hover table-condensed">
+		<tr>
+			<td>
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<tr>
+						<td width="10%"><label name="clienteL">Cliente</label></td>
+						<td width="32%"><input style="width: 100%" type="text"
+							id="clienteId" tabindex="1" name="cliente" ng-if="showClientes"
+							auto-complete ng-model="filterConsult.clienteNombre"
+							acoptions="clientes" acvalue="filterConsult.clienteId" /></td>
+						<td width="10%"><label name="proyectoL">Proyecto</label></td>
+						<td width="32%" align="left">{{filterConsult.proyectoNombre}}
+							<button type="button" tabindex="2" class="btn btn-default btn-sm"
+								popover="Buscar Proyecto" popover-trigger="mouseenter"
+								ng-click="findConsultProject()">
+								<span><img class="img-responsive" src="img/new.png"
+									width='20px' height='20px' /></span>
+							</button>
+							<button type="button" tabindex="2"
+								ng-if="filterConsult.proyectoId!=''"
+								class="btn btn-default btn-sm" popover="Limpiar Proyecto"
+								popover-trigger="mouseenter"
+								ng-click="clearSelectedConsultProject()">
+								<span><img class="img-responsive" src="img/wiping.png"
+									width='20px' height='20px' /></span>
+							</button>
+						</td>
+						<td width="16%" rowspan="4" style="vertical-align: middle;">
+							<button type="button" popover="Buscar" tabindex="9"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="loadFilterSearch()">
+								<center>
+									<img class="img-responsive" src="img/search.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+							<button type="button" popover="Limpiar Filtros" tabindex="10"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="clearFilter()">
+								<center>
+									<img class="img-responsive" src="img/wiping.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+						</td>
+
+					</tr>
+					<tr>
+						<td><label name="managerL">Manager</label></td>
+						<td align="left">{{filterConsult.managerNombre}}
+							<button type="button" tabindex="2" class="btn btn-default btn-sm"
+								popover="Buscar Manager" popover-trigger="mouseenter"
+								ng-click="findConsultManager()">
+								<span><img class="img-responsive" src="img/new.png"
+									width='20px' height='20px' /></span>
+							</button>
+							<button type="button" tabindex="2"
+								ng-if="filterConsult.managerId!=''"
+								class="btn btn-default btn-sm" popover="Limpiar Manager"
+								popover-trigger="mouseenter"
+								ng-click="clearSelectedConsultManager()">
+								<span><img class="img-responsive" src="img/wiping.png"
+									width='20px' height='20px' /></span>
+							</button>
+						</td>
+						<td><label name="ocL">Nro OC</label></td>
+						<td><input style="width: 100%" type="text" name="nro"
+							ng-model="filterConsult.numero" tabindex="4" /></td>
+					</tr>
+					<tr>
+						<td><label name="fechaDesdeL">Fecha Desde</label></td>
+						<td><input style="width: 100%" type="text" name="dateDesde"
+							tabindex="5" id="fechaDesdeId" date-picker-ng
+							max-date-picker="filterConsult.fechaHasta"
+							oninput="this.value=''" ng-model="filterConsult.fechaDesde" /></td>
+						<td><label name="fechaHastaL">Fecha Hasta</label></td>
+						<td><input style="width: 100%" type="text" name="dateHasta"
+							tabindex="6" id="fechaHastaId" date-picker-ng
+							min-date-picker="filterConsult.fechaDesde"
+							oninput="this.value=''" ng-model="filterConsult.fechaHasta" /></td>
+					</tr>
+					<tr>
+						<td><label name="statePreFacL">Estado PreFac</label></td>
+						<td><select class="max-width" name="StatePreFac" tabindex="7"
+							style="width: 100%;" ng-model="filterConsult.estadoPreFac"
+							id="idStatePreFac">
+								<option value="">-</option>
+								<option value="{{state.id}}" ng-repeat="state in estadosPreFac">{{state.nombre}}</option>
+						</select></td>
+						<td><label name="stateOCL">Estado OC</label></td>
+						<td><select class="max-width" name="state" tabindex="8"
+							style="width: 100%;" ng-model="filterConsult.estadoOC"
+							id="idState">
+								<option value="">-</option>
+								<option value="{{state.id}}" ng-repeat="state in estados">{{state.nombre}}</option>
+						</select></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><tabset> <tab heading="Ordenes de Compra">
+				<table class="table">
+					<tr>
+						<td align="right"><b>{{countOC}}</b></td>
+					</tr>
+				</table>
+				<table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th style="text-align: center;">Nro OC</th>
+							<th style="text-align: center;">Cliente</th>
+							<th style="text-align: center;">Concepto</th>
+							<th style="text-align: center;">Fecha Vencimiento</th>
+							<th style="text-align: center;">Estado</th>
+							<th style="text-align: center;">Monto OC</th>
+							<th style="text-align: center;">Total Facturado</th>
+							<th style="text-align: center;">Saldo OC</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="oc in ocs" ng-switch
+						on="dataCollapseOC[$index + 10000]" class="animate-repeat">
+						<tr title="Click para ver mas datos de la OC."
+							id="{{$index + 10000}}" style="background-color: #CACACA;"
+							ng-click="selectTableRowOC($index, oc.id)">
+							<td style="cursor: pointer;">{{oc.numero}}</td>
+							<td style="cursor: pointer;">{{findClientName(oc.cliente)}}</td>
+							<td style="cursor: pointer;">{{oc.concepto}}</td>
+							<td style="cursor: pointer;">{{oc.fechaVencimiento}}</td>
+							<td style="cursor: pointer;">{{oc.estado}}</td>
+							<td style="cursor: pointer;">${{oc.montoOC}}</td>
+							<td style="cursor: pointer;">${{oc.totalFacturado}}</td>
+							<td style="cursor: pointer;">${{oc.saldoOC}}</td>
+						</tr>
+						<tr ng-switch-when="true">
+							<td colspan="8">
+								<h4>Facturas</h4>
+								<table
+									class="table table-striped table-bordered table-hover table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Nro Factura</th>
+											<th style="text-align: center;">Nro Conformidad</th>
+											<th style="text-align: center;">Importe</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="fac in facturas"
+											ng-init="setTotal(fac.total,'totalFactura')">
+											<td>{{fac.numero}}</td>
+											<td>{{fac.nroConformidad}}</td>
+											<td>${{fac.total}}</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th style="vertical-align: middle; text-align: right;"
+												colspan="2"><output>Total</output></th>
+											<th style="text-align: center; vertical-align: middle;"><output>${{totalFactura}}</output></th>
+										</tr>
+									</tfoot>
+								</table>
+								<h4 ng-show="showFiles">Archivos</h4>
+								<table ng-show="showFiles"
+									class="table table-striped table-bordered table-hover">
+									<tr>
+										<th width="60%" style="text-align: center">Archivo</th>
+										<th width="60%" style="text-align: center">Tipo</th>
+									</tr>
+									<tr ng-repeat="file in archivos">
+										<td><output ng-click="download(file)">
+												<a href="javascript:">{{file.name}}</a>
+											</output></td>
+										<td><output>{{getTipoArchivo(file.type)}}</output></td>
+									</tr>
+								</table>
+								<table class="table table-striped table-bordered table-hover">
+									<tr>
+										<ng-pdf template-url="protected/template/templateViewPDF.html"
+											maxzoomin="1.5" minzoomout="0.3" canvasid="pdf" scale="0.5"
+											ng-if="showPDF"></ng-pdf>
+									</tr>
+								</table>
+								<hr
+									style="border: solid; color: #4698D2; background-color: #4698D2;" />
+							</td>
+						</tr>
+					</tbody>
+					<tfoot ng-if="filterConsult.totalPagesOC!=0">
+						<tr>
+							<td colspan="10">
+								<button ng-click="firstPageOC()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Primera"
+									ng-disabled="filterConsult.pageOC == 1">
+									<span><img class="img-responsive" src="img/first.png"
+										width='60%' height='60%' /></span>
+								</button>
+								<button ng-click="prevPageOC()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Previa"
+									ng-disabled="filterConsult.pageOC == 1">
+									<span><img class="img-responsive" src="img/prev.png"
+										width='60%' height='60%' /></span>
+								</button> <a ng-repeat="number in filterConsult.rangeOC" ng-bind="number"
+								ng-click="goPageOC(number)"
+								ng-class="{active: number == filterConsult.pageOC}" href=""
+								class="btn"> <i class="icon-fast-forward"></i>
+							</a>
+								<button ng-click="nextPageOC()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Siguiente"
+									ng-disabled="filterConsult.pageOC == filterConsult.totalPagesOC">
+									<span><img class="img-responsive" src="img/next.png"
+										width='60%' height='60%' /></span>
+								</button>
+								<button ng-click="lastPageOC()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Ultima"
+									ng-disabled="filterConsult.pageOC == filterConsult.totalPagesOC">
+									<span><img class="img-responsive" src="img/last.png"
+										width='60%' height='60%'></span>
+								</button>
+						</tr>
+					</tfoot>
+					<tr>
+						<td colspan="8">
+							<div ng-show="messageOC"
+								class="alert alert-dismissable alert-warning text-center">
+								<strong>{{warningOCMessage}}</strong>
+							</div>
+						</td>
+					</tr>
+				</table>
+				</tab> <tab heading="Pre Facturacion">
+				<table class="table">
+					<tr>
+						<td align="right"><b>{{countPF}}</b></td>
+					</tr>
+				</table>
+				<table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th style="text-align: center;">ID Prefa</th>
+							<th style="text-align: center;">Cliente</th>
+							<th style="text-align: center;">Proyecto</th>
+							<th style="text-align: center;">Manager</th>
+							<th style="text-align: center;">Descripcion</th>
+							<th style="text-align: center;">Período</th>
+							<th style="text-align: center;">Estado</th>
+							<th style="text-align: center;">Importe</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="prefac in prefac" ng-switch
+						on="dataCollapsePreFac[$index]" class="animate-repeat">
+						<tr title="Click para ver mas datos de la PreFac." id="{{$index}}"
+							style="background-color: #CACACA;"
+							ng-click="selectTableRowPreFac($index, prefac.id)">
+							<td style="cursor: pointer;">{{prefac.id}}</td>
+							<td style="cursor: pointer;">{{prefac.cliente}}</td>
+							<td style="cursor: pointer;">{{prefac.proyecto}}</td>
+							<td style="cursor: pointer;">{{prefac.manager}}</td>
+							<td style="cursor: pointer;">{{prefac.descripcion}}</td>
+							<td style="cursor: pointer;">{{prefac.periodo}}</td>
+							<td style="cursor: pointer;">{{prefac.estado}}</td>
+							<td style="cursor: pointer;">${{prefac.importe}}</td>
+						</tr>
+						<tr ng-switch-when="true">
+							<td colspan="8">
+								<h4>Colaboradores</h4>
+								<table
+									class="table table-striped table-bordered table-hover table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Nombre</th>
+											<th style="text-align: center;">Importe</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="people in peoples"
+											ng-init="setTotal(people.amount,'totalPeople')">
+											<td>{{people.name}}</td>
+											<td>{{people.amount}}</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th style="vertical-align: middle;">Total</th>
+											<th style="text-align: left; vertical-align: middle;"
+												colspan="4"><output>${{totalPeople}}</output></th>
+										</tr>
+									</tfoot>
+								</table>
+								<h4>OC Asociadas</h4>
+								<table
+									class="table table-striped table-bordered table-hover table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Numero</th>
+											<th style="text-align: center;">Concepto</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="oc in preFacOCs">
+											<td>{{oc.nro}}</td>
+											<td>{{oc.concept}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot ng-if="filterConsult.totalPagesPF!=0">
+						<tr>
+							<td colspan="10">
+								<button ng-click="firstPagePF()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Primera"
+									ng-disabled="filterConsult.pagePF == 1">
+									<span><img class="img-responsive" src="img/first.png"
+										width='60%' height='60%' /></span>
+								</button>
+								<button ng-click="prevPagePF()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Previa"
+									ng-disabled="filterConsult.pagePF == 1">
+									<span><img class="img-responsive" src="img/prev.png"
+										width='60%' height='60%' /></span>
+								</button> <a ng-repeat="number in filterConsult.rangePF" ng-bind="number"
+								ng-click="goPagePF(number)"
+								ng-class="{active: number == filterConsult.pagePF}" href=""
+								class="btn"> <i class="icon-fast-forward"></i>
+							</a>
+								<button ng-click="nextPagePF()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Siguiente"
+									ng-disabled="filterConsult.pagePF == filterConsult.totalPagesPF">
+									<span><img class="img-responsive" src="img/next.png"
+										width='60%' height='60%' /></span>
+								</button>
+								<button ng-click="lastPagePF()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Ultima"
+									ng-disabled="filterConsult.pagePF == filterConsult.totalPagesPF">
+									<span><img class="img-responsive" src="img/last.png"
+										width='60%' height='60%'></span>
+								</button>
+							</td>
+						</tr>
+					</tfoot>
+					<tr>
+						<td colspan="8">
+							<div ng-show="messagePF"
+								class="alert alert-dismissable alert-warning text-center">
+								<strong>{{warningPFMessage}}</strong>
+							</div>
+						</td>
+					</tr>
+				</table>
+				</tab></tabset></td>
+		</tr>
+	</table>
+
+	<table class="table table-bordered">
+		<tr>
+			<td style="text-align: center;"><button type="button"
+					tabindex="11" class="btn btn-primary" ng-click="go('/')">Menú
+					Principal</button></td>
+		</tr>
+	</table>
+</div>
+
+<div class="ng-modal-dialog modal-wait"
+	ng-show="modalFindManager || modalFindProject"></div>
+
+<!-- INICIO MODAL BUSCAR PROYECTO -->
+<div id="modalFindProjectId" ng-show="modalFindProject"
+	after-show="afterShow()" my-show="modalFindProject"
+	class="ng-modal-emergente modalTableDiv">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button tabindex="106" type="button"
+				ng-click="closeFindConsultProject()" class="close"
+				data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Buscar Proyecto</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<form name="consultFindProyect" id="consultFindProyect"
+					ng-init="showFilterFindProject=true">
+					<table>
+						<tr>
+							<td>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Ocultar Filtros"
+									data-trigger="hover" ng-show="showFilterFindProject"
+									ng-click="showFilterFindProject=false">
+									<span><img class="img-responsive" src="img/minus.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Mostrar Filtros"
+									data-trigger="hover" ng-show="!showFilterFindProject"
+									ng-click="showFilterFindProject=true">
+									<span><img class="img-responsive" src="img/plus.png"
+										width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showFilterFindProject"
+						class="table table-striped table-bordered table-hover">
+						<tr>
+							<th style="vertical-align: middle;" width="10%">Nombre</th>
+							<td width="70%"><input type="text" name="name"
+								tabindex="101" id="projectNameId" class="max-width form-control"
+								align="left" ng-model="filterConsultProject.nombre" /></td>
+							<td width="20%" rowspan="2" style="vertical-align: middle;"><button
+									tabindex="103" type="button" class="btn btn-default btn-sm"
+									popover="Buscar" popover-trigger="mouseenter"
+									ng-click="projectConsultFilterSearch()">
+									<img class="img-responsive" src="img/search.png" width='20px'
+										height='20px' />
+								</button></td>
+						</tr>
+						<tr>
+							<th style="vertical-align: middle;" width="10%">Activo</th>
+							<td width="70%"><select name="activo" tabindex="102"
+								class="max-width form-control"
+								ng-model="filterConsultProject.activo">
+									<option value="{{activo.id}}" ng-repeat="activo in activos">{{activo.name}}</option>
+							</select></td>
+						</tr>
+					</table>
+					<div ng-if="showTableModalFindProject">
+						<table ng-table="tableConsultFindProject"
+							class="table table-striped table-bordered table-hover">
+							<tr ng-repeat="project in $data">
+								<td width="10%" data-title="''"><input type="radio"
+									ng-checked="selectedConsult(project.id, filterConsult.proyectoId)"
+									name="groupProject"
+									ng-click="radioCheckConsultProject(project)"></td>
+								<td width="45%" data-title="'Nombre'"><output>{{project.nombre}}</output></td>
+								<td width="45%" data-title="'Activo'"><output>{{project.activo}}</output></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<div ng-show="consultProyectoMessage"
+							class="alert alert-dismissable alert-warning text-center">
+							<strong>{{warningConsultProyectoMessage}}</strong>
+						</div>
+						<button type="button" ng-click="closeFindConsultProject()"
+							class="btn btn-default" data-dismiss="modal" tabindex="105">Cerrar</button>
+						<button type="button" ng-click="acceptFindConsultProject()"
+							class="btn btn-primary" data-dismiss="modal" tabindex="104">Aceptar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- FIN MODAL BUSCAR PROYECTO -->
+
+<!-- INICIO MODAL BUSCAR MANAGER -->
+<div id="modalFindManagerId" ng-show="modalFindManager"
+	after-show="afterShow()" my-show="modalFindManager"
+	class="ng-modal-emergente">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" tabindex="205"
+				ng-click="closeFindConsultManager()" class="close"
+				data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Buscar Managers</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<form name="form-find-manager" id="formFindManager"
+					ng-init="showFilterFindManager=true">
+					<table>
+						<tr>
+							<td>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Ocultar Filtros"
+									data-trigger="hover" ng-show="showFilterFindManager"
+									ng-click="showFilterFindManager=false">
+									<span><img class="img-responsive" src="img/minus.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Mostrar Filtros"
+									data-trigger="hover" ng-show="!showFilterFindManager"
+									ng-click="showFilterFindManager=true">
+									<span><img class="img-responsive" src="img/plus.png"
+										width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showFilterFindManager"
+						class="table table-striped table-bordered table-hover">
+						<tr>
+							<th style="vertical-align: middle;" width="10%">Nombre</th>
+							<td width="70%"><input type="text" name="name"
+								tabindex="201" id="managerNameId"
+								ng-model="filterConsultManager.nombre"
+								class="max-width form-control" align="left" /></td>
+							<td width="20%" style="vertical-align: middle;"><button
+									tabindex="202" type="button" class="btn btn-default btn-sm"
+									popover="Buscar" popover-trigger="mouseenter"
+									ng-click="managerConsultFilterSearch()">
+									<img class="img-responsive" src="img/search.png" width='20px'
+										height='20px' />
+								</button></td>
+						</tr>
+					</table>
+					<div ng-if="showTableModalFindManager">
+						<table ng-table="tableConsultFindManager"
+							class="table table-striped table-bordered table-hover">
+							<tr ng-repeat="manager in $data">
+								<td width="10%" data-title="''"><input type="radio"
+									ng-checked="selectedConsult(manager.id, filterConsult.managerId)"
+									name="groupManager"
+									ng-click="radioCheckConsultManager(manager)"></td>
+								<td width="30%" data-title="'Nombre'"><output>{{manager.nombre}}</output></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<div ng-show="consultManagerMessage"
+							class="alert alert-dismissable alert-warning text-center">
+							<strong>{{warningConsultManagerMessage}}</strong>
+						</div>
+						<button type="button" ng-click="closeFindConsultManager()"
+							class="btn btn-default" data-dismiss="modal" tabindex="204">Cerrar</button>
+						<button type="button" ng-click="acceptFindConsultManager()"
+							class="btn btn-primary" data-dismiss="modal" tabindex="203">Aceptar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- FIN MODAL BUSCAR MANAGER -->

@@ -1,0 +1,123 @@
+<div class="jumbotron text-center">
+	<table class="table table-striped table-bordered table-condensed">
+		<tr>
+			<td align="right"><b>{{count}}</b></td>
+		</tr>
+		<tr>
+			<td><table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<thead>
+						<tr>
+							<th style="text-align: center;">Nombre</th>
+							<th style="text-align: center;">Apellido</th>
+							<th style="text-align: center;">Cargo</th>
+							<th style="text-align: center;">Estado</th>
+							<td style="text-align: center;"><button
+									popover="Crear Usuario" popover-trigger="mouseenter"
+									type="button" class="btn btn-default btn-sm"
+									ng-click="go('user-admin/user-form')">
+									<span><img class="img-responsive" src="img/new.png"
+										width='60%' height='60%' /></span>
+								</button></td>
+						</tr>
+						<tr>
+							<th><input style="width: 100%;" type="text"
+								ng-model="extFilter.name"></th>
+							<th><input style="width: 100%;" type="text"
+								ng-model="extFilter.lastName"></th>
+							<th><input style="width: 100%;" type="text"
+								ng-model="extFilter.job"></th>
+							<th><select name="state" ng-model="extFilter.active"
+								id="idState">
+									<option value="{{state.id}}" ng-repeat="state in states">{{state.name}}</option>
+							</select>
+							<td style="text-align: center;"><button type="button"
+									popover="Buscar" popover-trigger="mouseenter"
+									class="btn btn-default btn-sm" ng-click="loadFilter()">
+									<span><img class="img-responsive" src="img/search.png"
+										width='60%' height='60%' /></span>
+								</button></td>
+						</tr>
+					</thead>
+					<tr ng-show="!showMessage">
+						<td colspan="5"></td>
+					</tr>
+					<tbody>
+						<tr ng-repeat="user in users">
+							<td>{{user.name}}</td>
+							<td>{{user.lastName}}</td>
+							<td>{{user.job}}</td>
+							<td>{{user.active}}</td>
+							<td style="text-align: center"><button type="button"
+									class="btn btn-default btn-sm" popover="Editar Usuario"
+									popover-trigger="mouseenter"
+									ng-click="goEdit('user-admin/user-form-edit',user.id)">
+									<span><img class="img-responsive" src="img/edit.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Asignar/Desasignar Roles" popover-trigger="mouseenter"
+									ng-click="goAssignRoles('user-admin/user-assign-roles',user.id)">
+									<span><img class="img-responsive"
+										src="img/assign_role.png" width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Eliminar Usuario" popover-trigger="mouseenter"
+									ng-click="deleteUser(user)">
+									<span><img class="img-responsive" src="img/delete.png"
+										width='20px' height='20px' /></span>
+								</button></td>
+						</tr>
+					</tbody>
+					<tr ng-show="!showMessage">
+						<td colspan="5"></td>
+					</tr>
+					<tfoot ng-if="filter.totalPages!=0">
+						<tr>
+							<td>
+								<button ng-click="firstPage()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Primera"
+									ng-disabled="filter.page == 1">
+									<span><img class="img-responsive" src="img/first.png"
+										width='60%' height='60%' /></span>
+								</button>
+								<button ng-click="prevPage()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Previa"
+									ng-disabled="filter.page == 1">
+									<span><img class="img-responsive" src="img/prev.png"
+										width='60%' height='60%' /></span>
+								</button>
+							<td colspan="2"><a ng-repeat="number in filter.range"
+								ng-bind="number" ng-click="goPage(number)"
+								ng-class="{active: number == filter.page}" href="" class="btn">
+									<i class="icon-fast-forward"></i>
+							</a></td>
+							<td colspan="2"><button ng-click="nextPage()"
+									class="btn btn-default btn-sm" data-toggle="tooltip"
+									data-placement="top" title="Siguiente"
+									ng-disabled="filter.page == filter.totalPages">
+									<span><img class="img-responsive" src="img/next.png"
+										width='60%' height='60%' /></span>
+								</button>
+								<button ng-click="lastPage()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Ultima"
+									ng-disabled="filter.page == filter.totalPages">
+									<span><img class="img-responsive" src="img/last.png"
+										width='60%' height='60%'></span>
+								</button></td>
+						</tr>
+					</tfoot>
+				</table></td>
+		</tr>
+	</table>
+	<table class="table table-bordered">
+		<tr>
+			<td ng-show="showMessage"
+				class="alert alert-dismissable alert-warning"><strong>{{warningMessage}}</strong></td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><button type="button"
+					class="btn btn-primary" ng-click="go('/')">Menú Principal</button></td>
+		</tr>
+	</table>
+</div>

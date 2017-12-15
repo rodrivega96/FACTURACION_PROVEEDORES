@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ha-server-demo">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="ha-core-ext-1.0.3-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ha-core-ext/ha-core-ext">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ha-core-1.0.3-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ha-core/ha-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ha-persistence-api-1.0.3-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ha-persistence-api/ha-persistence-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ha-basic-service-1.0.3-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ha-basic-service/ha-basic-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ha-persistence-impl-1.0.3-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ha-persistence-impl/ha-persistence-impl">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ha-generator-1.0.3-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ha-generator/ha-generator">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ha-basic-cache-1.0.3-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ha-basic-cache/ha-basic-cache">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="ha-server-demo"/>
+        <property name="java-output-path" value="/ha-server-demo/target/classes"/>
+    </wb-module>
+</project-modules>

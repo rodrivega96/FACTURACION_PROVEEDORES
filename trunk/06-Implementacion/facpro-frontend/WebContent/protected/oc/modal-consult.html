@@ -1,0 +1,381 @@
+<div class="ng-modal-dialog modal-wait"
+	ng-show="modalFindManager || modalFindProject || ocConsultShowModalPDF || showModalAsociar || ocConsultShowModalPrefas"></div>
+
+<!-- INICIO MODAL BUSCAR PROYECTO -->
+<div id="modalFindProjectId" ng-show="modalFindProject"
+	after-show="afterShow()" my-show="modalFindProject"
+	class="ng-modal-emergente modalTableDiv">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button tabindex="106" type="button"
+				ng-click="closeFindConsultProject()" class="close"
+				data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Buscar Proyecto</h4>
+		</div>
+		<form name="consultFindProyect" id="consultFindProyect"
+			ng-init="showFilterFindProject=true">
+			<div class="modal-body">
+				<div class="text-center">
+					<table>
+						<tr>
+							<td>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Ocultar Filtros"
+									data-trigger="hover" ng-show="showFilterFindProject"
+									ng-click="showFilterFindProject=false">
+									<span><img class="img-responsive" src="img/minus.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Mostrar Filtros"
+									data-trigger="hover" ng-show="!showFilterFindProject"
+									ng-click="showFilterFindProject=true">
+									<span><img class="img-responsive" src="img/plus.png"
+										width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showFilterFindProject"
+						class="table table-striped table-bordered table-hover">
+						<tr>
+							<th style="vertical-align: middle;" width="10%">Nombre</th>
+							<td width="70%"><input type="text" name="name"
+								tabindex="101" id="projectNameId" class="max-width form-control"
+								align="left" ng-model="filterConsultProject.nombre" /></td>
+							<td width="20%" rowspan="2" style="vertical-align: middle;"><button
+									tabindex="103" type="button" class="btn btn-default btn-sm"
+									popover="Buscar" popover-trigger="mouseenter"
+									ng-click="projectConsultFilterSearch()">
+									<img class="img-responsive" src="img/search.png" width='20px'
+										height='20px' />
+								</button></td>
+						</tr>
+						<tr>
+							<th style="vertical-align: middle;" width="10%">Activo</th>
+							<td width="70%"><select name="activo" tabindex="102"
+								class="max-width form-control"
+								ng-model="filterConsultProject.activo">
+									<option value="{{activo.id}}" ng-repeat="activo in activos">{{activo.name}}</option>
+							</select></td>
+						</tr>
+					</table>
+					<div ng-if="showTableModalFindProject">
+						<table ng-table="tableConsultFindProject"
+							class="table table-striped table-bordered table-hover">
+							<tr ng-repeat="project in $data">
+								<td width="10%" data-title="''"><input type="radio"
+									ng-checked="selectedConsult(project.id, filterConsult.proyectoId)"
+									name="groupProject"
+									ng-click="radioCheckConsultProject(project)"></td>
+								<td width="45%" data-title="'Nombre'"><output>{{project.nombre}}</output></td>
+								<td width="45%" data-title="'Activo'"><output>{{project.activo}}</output></td>
+							</tr>
+						</table>
+					</div>
+					<div ng-show="consultProyectoMessage"
+						class="alert alert-dismissable alert-warning text-center">
+						<strong>{{warningConsultProyectoMessage}}</strong>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" ng-click="closeFindConsultProject()"
+					class="btn btn-default" data-dismiss="modal" tabindex="105">Salir</button>
+				<button type="button" ng-click="acceptFindConsultProject()"
+					class="btn btn-primary" data-dismiss="modal" tabindex="104">Aceptar</button>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- FIN MODAL BUSCAR PROYECTO -->
+
+<!-- INICIO MODAL BUSCAR MANAGER -->
+<div id="modalFindManagerId" ng-show="modalFindManager"
+	after-show="afterShow()" my-show="modalFindManager"
+	class="ng-modal-emergente">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" tabindex="205"
+				ng-click="closeFindConsultManager()" class="close"
+				data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Buscar Managers</h4>
+		</div>
+		<form name="form-find-manager" id="formFindManager"
+			ng-init="showFilterFindManager=true">
+			<div class="modal-body">
+				<div class="text-center">
+					<table>
+						<tr>
+							<td>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Ocultar Filtros"
+									data-trigger="hover" ng-show="showFilterFindManager"
+									ng-click="showFilterFindManager=false">
+									<span><img class="img-responsive" src="img/minus.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" title=""
+									data-toggle="popover" data-content="Mostrar Filtros"
+									data-trigger="hover" ng-show="!showFilterFindManager"
+									ng-click="showFilterFindManager=true">
+									<span><img class="img-responsive" src="img/plus.png"
+										width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showFilterFindManager"
+						class="table table-striped table-bordered table-hover">
+						<tr>
+							<th style="vertical-align: middle;" width="10%">Nombre</th>
+							<td width="70%"><input type="text" name="name"
+								tabindex="201" id="managerNameId"
+								ng-model="filterConsultManager.nombre"
+								class="max-width form-control" align="left" /></td>
+							<td width="20%" style="vertical-align: middle;"><button
+									tabindex="202" type="button" class="btn btn-default btn-sm"
+									popover="Buscar" popover-trigger="mouseenter"
+									ng-click="managerConsultFilterSearch()">
+									<img class="img-responsive" src="img/search.png" width='20px'
+										height='20px' />
+								</button></td>
+						</tr>
+					</table>
+					<div ng-if="showTableModalFindManager">
+						<table ng-table="tableConsultFindManager"
+							class="table table-striped table-bordered table-hover">
+							<tr ng-repeat="manager in $data">
+								<td width="10%" data-title="''"><input type="radio"
+									ng-checked="selectedConsult(manager.id, filterConsult.managerId)"
+									name="groupManager"
+									ng-click="radioCheckConsultManager(manager)"></td>
+								<td width="30%" data-title="'Nombre'"><output>{{manager.nombre}}</output></td>
+							</tr>
+						</table>
+					</div>
+					<div ng-show="consultManagerMessage"
+						class="alert alert-dismissable alert-warning text-center">
+						<strong>{{warningConsultManagerMessage}}</strong>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" ng-click="closeFindConsultManager()"
+					class="btn btn-default" data-dismiss="modal" tabindex="204">Salir</button>
+				<button type="button" ng-click="acceptFindConsultManager()"
+					class="btn btn-primary" data-dismiss="modal" tabindex="203">Aceptar</button>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- FIN MODAL BUSCAR MANAGER -->
+
+<!-- INICIO MODAL PDF -->
+<div id="modalPDFId" class="ng-modal-emergente modalTableDiv"
+	ng-show="ocConsultShowModalPDF" after-show="afterShow()"
+	my-show="ocConsultShowModalPDF">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" ng-click="closeFindModalPDF()" class="close"
+				tabindex="208" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title text-center">{{pdfName}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<ng-pdf template-url="protected/template/templateViewPDF.html"
+					ng-if="showPDF" maxzoomin="1.5" minzoomout="0.3" canvasid="pdf"
+					scale="0.5"></ng-pdf>
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" ng-click="closeFindModalPDF()"
+				class="btn btn-primary" data-dismiss="modal" tabindex="106">Salir</button>
+		</div>
+	</div>
+</div>
+<!-- FIN MODAL PDF -->
+
+<!-- INICIO MODAL ASOCIAR -->
+<div class="ng-modal-emergente modalTableDiv" ng-if="showModalAsociar"
+	after-show="afterShow()" my-show="showModalAsociar">
+	<div class="modal-content" id="showModalAsociarId">
+		<div class="modal-header">
+			<button type="button" ng-click="closeModalAssociateFacturas()"
+				class="close" tabindex="208" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title text-center">Asociar Facturas a Orden Nº:
+				{{ordenNumero}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<div ng-show="showTableAssociate">
+					<table class="table table-striped table-bordered table-hover"
+						show-filter="true" ng-table="tableAssociate">
+						<tr ng-repeat="factura in $data">
+							<td width="60%" data-title="'Numero'"
+								filter="{ 'numero': 'text' }"><output>{{factura.numero}}</output></td>
+							<td width="20%" data-title="'Total'" filter="{ 'total': 'text' }"><output>${{utilidades.getCurrency(factura.total)}}</output></td>
+							<td width="20%" data-title="'Seleccionado'"
+								filter="{ 'seleccionado': 'select' }"
+								filter-data="seleccionados()"><input type="checkbox" class="form-control"
+								ng-model="factura.seleccionado" /></td>
+						</tr>
+					</table>
+				</div>
+				<div ng-hide="showTableAssociate"
+					class="alert alert-dismissable alert-warning text-center">
+					<strong>{{warningTableAssociateMessage}}</strong>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" ng-click="associateFacturas()"
+				class="btn btn-primary" data-dismiss="modal" tabindex="106">Aceptar</button>
+			<button type="button" ng-click="closeModalAssociateFacturas()"
+				class="btn btn-default" data-dismiss="modal" tabindex="106">Salir</button>
+		</div>
+	</div>
+</div>
+<!-- FIN MODAL ASOCIAR -->
+
+<!-- INICIO MODAL PREFAS -->
+<div id="modalPrefasId" class="ng-modal-emergente modalTableDiv"
+	ng-show="ocConsultShowModalPrefas" after-show="afterShow()"
+	my-show="ocConsultShowModalPrefas">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" ng-click="closeModalPrefas()" class="close"
+				tabindex="208" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title text-center">Prefacturaciones asociadas a
+				la OC {{prefaNombre}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<table class="table table-striped table-bordered table-hover">
+					<tr>
+						<td style="vertical-align: middle;"><label
+							name="statePreFacL" class="control-label">Estado PreFac</label></td>
+						<td><select class="max-width form-control" name="StatePreFac"
+							tabindex="7" ng-model="filterConsultPF.estadoPreFac"
+							id="idStatePreFac">
+								<option value="">-</option>
+								<option value="{{state.id}}" ng-repeat="state in estadosPreFac">{{state.nombre}}</option>
+						</select></td>
+						<td width="20%" style="vertical-align: middle;"><button
+								tabindex="202" type="button" class="btn btn-default btn-sm"
+								popover="Buscar" popover-trigger="mouseenter"
+								ng-click="loadFilterSearchPF()">
+								<img class="img-responsive" src="img/search.png" width='20px'
+									height='20px' />
+							</button></td>
+					</tr>
+				</table>
+
+				<table class="table">
+					<tr>
+						<td align="right"><b>{{countPF}}</b></td>
+					</tr>
+				</table>
+				<table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th style="text-align: center;">ID Prefa</th>
+							<th style="text-align: center;">Cliente</th>
+							<th style="text-align: center;">Proyecto</th>
+							<th style="text-align: center;">Manager</th>
+							<th style="text-align: center;">Descripcion</th>
+							<th style="text-align: center;">Período</th>
+							<th style="text-align: center;">Estado</th>
+							<th style="text-align: center;">Importe</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="prefac in prefac" ng-switch
+						on="dataCollapsePreFac[$index]" class="animate-repeat">
+						<tr title="Click para ver mas datos de la PreFac." id="{{$index}}"
+							style="background-color: #CACACA;"
+							ng-click="selectTableRowPreFac($index, prefac.id)">
+							<td style="cursor: pointer;">{{prefac.id}}</td>
+							<td style="cursor: pointer;">{{prefac.cliente}}</td>
+							<td style="cursor: pointer;">{{prefac.proyecto}}</td>
+							<td style="cursor: pointer;">{{prefac.manager}}</td>
+							<td style="cursor: pointer;">{{prefac.descripcion}}</td>
+							<td style="cursor: pointer;">{{prefac.periodo}}</td>
+							<td style="cursor: pointer;">{{prefac.estado}}</td>
+							<td style="cursor: pointer; text-align: right;">${{prefac.importe}}</td>
+						</tr>
+						<tr ng-switch-when="true">
+							<td colspan="8">
+								<h4>
+									<b>Colaboradores</b>
+								</h4>
+								<table
+									class="table table-striped table-bordered table-hover table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Nombre</th>
+											<th style="text-align: center;">Importe</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="people in peoples"
+											ng-init="setTotal(people.amount,'totalPeople')">
+											<td>{{people.name}}</td>
+											<td style="text-align: right;">${{people.amount}}</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th style="vertical-align: middle; text-align: right;"><output>Total</output></th>
+											<th style="text-align: right; vertical-align: middle;"><output>${{totalPeople}}</output></th>
+										</tr>
+									</tfoot>
+								</table>
+								<h4>
+									<b>OC Asociadas</b>
+								</h4>
+								<table
+									class="table table-striped table-bordered table-hover table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Numero</th>
+											<th style="text-align: center;">Concepto</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="oc in preFacOCs">
+											<td>{{oc.nro}}</td>
+											<td>{{oc.concept}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<hr
+									style="border: solid; color: #4698D2; background-color: #4698D2;" />
+							</td>
+						</tr>
+					</tbody>
+					<tfoot ng-if="filterConsultPF.totalPagesPF!=0">
+						<tr>
+							<td colspan="8" paginated-button paginatedname="paginatedPFName"
+								paginatedfilter="filterNamePF"></td>
+						</tr>
+					</tfoot>
+					<tr>
+						<td colspan="8">
+							<div ng-show="messagePF"
+								class="alert alert-dismissable alert-warning text-center">
+								<strong>{{warningPFMessage}}</strong>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" ng-click="closeModalPrefas()"
+				class="btn btn-primary" data-dismiss="modal" tabindex="106">Salir</button>
+		</div>
+	</div>
+</div>
+<!-- FIN MODAL PREFAS -->

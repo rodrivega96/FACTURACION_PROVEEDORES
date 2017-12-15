@@ -1,0 +1,27 @@
+<div class="text-center">
+	<table class="table table-striped table-bordered table-hover">
+		<tr>
+			<td align="right"><b>{{count}}</b></td>
+		</tr>
+		<tr>
+			<td><table
+					class="table table-striped table-bordered table-hover"
+					show-filter="true" ng-table="tableFile">
+					<tr ng-repeat="file in $data">
+						<td width="30%" data-title="'Fecha de carga'"
+							filter="{ 'date': 'text' }"><output>{{file.date}}</output></td>
+						<td width="40%" data-title="'Archivo'" filter="{ 'name': 'text' }"><output
+								ng-click="download(file)">
+								<a href="javascript:">{{file.name}}</a>
+							</output></td>
+					</tr>
+				</table></td>
+		</tr>
+		<tr>
+			<td>
+				<button type='button' class="btn btn-primary"
+					ng-click="backFileAdm()">Volver</button>
+			</td>
+		</tr>
+	</table>
+</div>

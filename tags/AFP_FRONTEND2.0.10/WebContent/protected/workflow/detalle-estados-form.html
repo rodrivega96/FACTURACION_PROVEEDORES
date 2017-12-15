@@ -1,0 +1,41 @@
+<script type='text/javascript'
+	src="protected/workflow/DetalleEstadosFormController.js"></script>
+<script type='text/javascript'
+	src="protected/workflow/DetalleWFModel.js"></script>
+<div class="text-center">
+	<table class="table table-striped table-bordered table-hover">
+		<tr>
+			<td>
+				<table class="table table-striped table-bordered table-hover"
+					ng-table="tableHistorial">
+					<thead>
+						<tr>
+							<td width="10%"><label>Nivel</label></td>
+							<td width="30%"><label>Autoriza</label></td>
+							<td width="15%"><label>Estado</label></td>
+							<td width="15%"><label>Fecha Hora</label></td>
+							<td width="30%"><label>Descripcion</label></td>
+						</tr>
+					</thead>
+					<tbody ng-repeat="historial in $data">
+						<tr>
+							<td style="vertical-align: super;"><output>{{historial.nivel}}</output></td>
+							<td style="vertical-align: super;"><output>{{historial.autoriza}}</output></td>
+							<td style="vertical-align: super;"><output>{{historial.estado}}</output></td>
+							<td style="vertical-align: super;"><output>{{historial.fecha}}</output></td>
+							<td style="vertical-align: super;"><output>{{historial.descripcion}}</output></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="table table-striped table-bordered table-hover">
+		<tr>
+			<td colspan="2">
+				<button type='button' class="btn btn-primary"
+					ng-click="backAutAdm()">Volver</button>
+			</td>
+		</tr>
+	</table>
+</div>

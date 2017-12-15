@@ -1,0 +1,88 @@
+################### Session Configuration ##########################
+session.id.descriptor=vates-session-id
+
+################### Unique ID generator type ##########################
+generatorType=uuid
+
+################### DataSource Configuration ##########################
+jdbc.driverClassName=oracle.jdbc.OracleDriver
+jdbc.url=jdbc:oracle:thin:@192.168.50.13:1521:orcl
+jdbc.username=afp
+jdbc.password=cbaVates2$
+#jdbc.url=jdbc:oracle:thin:@192.168.50.58:1521:DESA10G
+#jdbc.username=facpro
+#jdbc.password=facpro
+jdbc.maxPoolSize=50
+jdbc.minPoolSize=2
+init-db=false
+
+################### Hibernate Configuration ##########################
+orm.dialect=org.hibernate.dialect.OracleDialect
+orm.show_sql=true
+orm.format_sql=true
+orm.generate_ddl=true
+
+################### Mail Configuration ##########################
+mail.auth=false
+mail.starttls.enable=false 
+mail.host=192.168.50.26
+mail.port=25
+mail.address=sistemasinternos@vates.com
+mail.pass=pass
+#mail.user=Sistemas Internos
+mail.user=Pruebas Sistemas Internos
+mail.transport.protocol= smtp
+
+
+################### LDAP Configuration ##########################
+ldap.domain=vates.org
+ldap.host=192.168.50.10
+ldap.port=389
+ldap.user=afp ldap
+ldap.pass=%%vates2015%%
+ldap.vates=VATESSA
+ldap.ssl=false
+
+################### Notoficaciones Configuration ##########################
+#notifications.server.front.port=8085/facpro-frontend
+notifications.server.front.port=/si
+notifications.before.expire.days=2
+
+
+################### JOBS Configuration ##########################
+################### Sec Min Hr Day-of-Month Month Day-of-Week Year##########################
+#Notifica facturas pendientes
+#Se ejecuta a las 7 de la mañana todos los lunes:
+pending.cron.rate=0 0 7 * * 1
+
+#Notifica facturas vencidas
+#Se ejecuta a las 7 de la mañana cada 2 dias a partir del primer dia del mes:
+expired.cron.rate =   0  0  7  1/2  *  ? 
+
+#Notifica estado diario de facturas
+#Se ejecuta a las 6 de la mañana todos los dias:
+daily.cron.rate =   0  0  6  *  *  ? 
+
+#Notifica facturas a vencer
+#Se ejecuta a las 7 de la mañana todos los dias:
+before.expire.cron.rate =   0  0  7  *  *  ? 
+
+#Envia emails de autorizaciones asignadas
+#Se ejecuta a cada 10 minutos:
+authorization.cron.rate =   0  */10  *  *  *  ? 
+
+#Elimina archivos temporales. 
+#Se ejecuta cada 3 horas:
+delete.file.cron.rate =   0  0  */3  *  *  ? 
+
+#Cierra ordenes sin saldo. 
+#Se ejecuta a los 30 minutos de cada hora:
+oc.close.cron.rate =  *  30  *  *  *  ? 
+
+################### File Configuration ##########################
+file.max.size = 5242880
+##5 MB
+time.to.delete.file = 5
+##5 Horas
+
+system.version = 2.0.9

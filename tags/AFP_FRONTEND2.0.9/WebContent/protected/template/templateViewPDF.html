@@ -1,0 +1,40 @@
+<nav ng-class="getNavStyle(scroll)">
+	<div>
+		<button ng-click="goDownload()" title="" data-toggle="popover"
+			data-content="Descargar" data-trigger="hover" data-placement="top">
+			<span><img class="img-responsive" src="img/pdf_down.png"
+				width='20px' height='20px' /></span>
+		</button>
+		<button ng-click="goPrevious()" title="" data-toggle="popover"
+			data-content="Página Anterior" data-trigger="hover"
+			data-placement="top">
+			<span><img class="img-responsive" src="img/pdf_prev.png"
+				width='20px' height='20px' /></span>
+		</button>
+		<button ng-click="goNext()" title="" data-toggle="popover"
+			data-content="Página Siguiente" data-trigger="hover"
+			data-placement="top">
+			<span><img class="img-responsive" src="img/pdf_next.png"
+				width='20px' height='20px' /></span>
+		</button>
+		<button ng-click="zoomIn()" title="" data-toggle="popover"
+			data-content="Aumentar" data-trigger="hover" data-placement="top">
+			<span><img class="img-responsive" src="img/pdf_in.png"
+				width='20px' height='20px' /></span>
+		</button>
+		<button ng-click="zoomOut()" title="" data-toggle="popover"
+			data-content="Disminuir" data-trigger="hover" data-placement="top">
+			<span><img class="img-responsive" src="img/pdf_out.png"
+				width='20px' height='20px' /></span>
+		</button>
+	</div>
+	<div style="padding-top: 1%;">
+		<span> Página {{pageNum}} de {{pageCount}}</span>
+	</div>
+
+</nav>
+
+<hr>
+<div class="pdfModal">
+	<canvas id="pdf" class="rotate0"></canvas>
+</div>

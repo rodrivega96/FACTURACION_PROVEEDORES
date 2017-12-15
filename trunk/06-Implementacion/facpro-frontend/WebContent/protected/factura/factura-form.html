@@ -1,0 +1,119 @@
+<script type='text/javascript'
+	src="protected/factura/FacturaFormController.js"></script>
+<script type='text/javascript' src="protected/factura/FacturaModel.js"></script>
+<div class="text-center">
+	<form name="formfacturaform" ng-submit="saveFac()">
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Numero</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.nroFactura"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Cuit</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.cuit"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Razon Social</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.razonSocial"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Estado</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.estado"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Descipcion</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.descripcion"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Fecha Vencimiento
+						Factura</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.fechaFactura"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Fecha Vencimiento
+						Adm</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.fechaVencimientoAdm"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Fecha Contable</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.fechaContableAdm"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Neto</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.importeNeto"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>IVA</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.iva"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Total</label></td>
+				<td align="left"><output style="width: 60%"
+						ng-bind="factura.total"> </output></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Tipo</label></td>
+				<td align="left"><select ng-model="factura.tipoFactura"
+					required="required" ng-disabled="!factura.canSave" id="idTipo"
+					ng-options="tipo1.id as tipo1.name for tipo1 in tipos">
+						<option value=""></option>
+				</select></td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Fecha de
+						Vencimiento *</label>
+				<td align="left"><input type="text" id="facturaFormFechaVencimiento" date-picker-ng
+					required oninput="this.value=''" ng-disabled="!factura.canSave" ng-model="factura.vencimiento">
+				</td>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;" width="20%" align="left"><label>Numero
+						Kanav</label>
+				<td align="left"><input type="number" min="0" step="1" ng-model="factura.nroKanav"
+					ng-disabled="!factura.canSave"></td>
+			</tr>
+			<tr>
+				<td width="20%" align="left" style="vertical-align: middle;"><label>Observaciones
+						Generales</label>
+				<td align="left"><textarea maxlength="255" class="max-width"
+					ng-model="factura.observacion" ng-disabled="!factura.canSave"></textarea>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2">
+					<table class="table table-striped table-bordered table-hover"
+						ng-table="tableAsientos">
+						<tr ng-repeat="asiento in $data">
+							<td data-title="'Numero'"><output>{{asiento.nroCentroCostos}}</output></td>
+							<td data-title="'Cuenta'"><output>{{asiento.descCuenta}}</output></td>
+							<td data-title="'Centro'"><output>{{asiento.descControl}}</output></td>
+							<td data-title="'Importe'"><output>$
+									{{asiento.importeNeto}}</output></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2"><input type='submit' class="btn btn-primary"
+					value="Grabar y Continuar" ng-if="factura.canSave"
+					ng-click="wizard(true)" /> <input type='submit'
+					class="btn btn-primary" value="Grabar" ng-if="factura.canSave"
+					ng-click="wizard(false)" />
+					<button type='button' class="btn btn-primary"
+						ng-click="backFacAdm()">Volver</button></td>
+			</tr>
+		</table>
+	</form>
+</div>

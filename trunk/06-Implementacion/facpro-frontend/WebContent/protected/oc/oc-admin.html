@@ -1,0 +1,188 @@
+<script type='text/javascript' src="protected/oc/OCModel.js"></script>
+<script type='text/javascript' src="protected/oc/OCController.js"></script>
+<div class="jumbotron text-center">
+	<table
+		class="table table-striped table-bordered table-hover table-condensed">
+		<tr>
+			<td>
+				<table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<tr>
+						<td width="20%"><label name="clienteL">Cliente</label></td>
+						<td width="60%"><input style="width: 100%" type="text"
+							id="clienteId" tabindex="1" name="cliente" ng-if="showClientes"
+							auto-complete ng-model="filter.clienteNombre"
+							acoptions="clientes" acvalue="filter.clienteId" /></td>
+						<td width="20%" rowspan="5" style="vertical-align: middle;">
+							<button type="button" popover="Buscar" tabindex="5"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="loadFilterSearch()">
+								<center>
+									<img class="img-responsive" src="img/search.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+							<button type="button" popover="Limpiar Filtros" tabindex="6"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="clearFilter()">
+								<center>
+									<img class="img-responsive" src="img/wiping.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+							<button type="button" popover="Agregar Orden de Compra"
+								tabindex="7" popover-trigger="mouseenter"
+								class="btn btn-default btn-sm"
+								ng-click="goNew('/oc-admin/oc-form')">
+								<center>
+									<img class="img-responsive" src="img/newOC.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td><label name="propuestaL">Propuesta</label></td>
+						<td align="left">{{filter.propuestaNombre}}
+							<button type="button" tabindex="3" class="btn btn-default btn-sm"
+								popover="Buscar Propuesta" popover-trigger="mouseenter"
+								ng-click="goFindProposal()">
+								<span><img class="img-responsive" src="img/new.png"
+									width='20px' height='20px' /></span>
+							</button>
+							<button type="button" tabindex="2" ng-if="filter.propuestaId!=''"
+								class="btn btn-default btn-sm" popover="Limpiar Proyecto"
+								popover-trigger="mouseenter" ng-click="clearSelectedProposal()">
+								<span><img class="img-responsive" src="img/wiping.png"
+									width='20px' height='20px' /></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td><label name="proyectoL">Proyecto</label></td>
+						<td align="left">{{filter.proyectoNombre}}
+							<button type="button" tabindex="2" class="btn btn-default btn-sm"
+								popover="Buscar Proyecto" popover-trigger="mouseenter"
+								ng-click="goFindProject()">
+								<span><img class="img-responsive" src="img/new.png"
+									width='20px' height='20px' /></span>
+							</button>
+							<button type="button" tabindex="2" ng-if="filter.proyectoId!=''"
+								class="btn btn-default btn-sm" popover="Limpiar Proyecto"
+								popover-trigger="mouseenter" ng-click="clearSelectedProject()">
+								<span><img class="img-responsive" src="img/wiping.png"
+									width='20px' height='20px' /></span>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td><label name="estadoL">Estado</label></td>
+						<td align="left"><select name="state"
+							ng-model="filter.estado" class="max-width" style="width: 20%;"
+							id="idStateS"
+							ng-options="estado.id as estado.nombre for estado in estados">
+								<option value=""></option>
+
+						</select></td>
+					</tr>
+					<tr>
+						<td><label name="activaL">Activa</label></td>
+						<td align="left"><select name="activa" style="width: 20%"
+							tabindex="4" ng-model="filter.activa" id="idActiva"
+							ng-options="activa.id as activa.name for activa in activos">
+								<option value=""></option>
+						</select></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td align="right"><b>{{count}}</b></td>
+		</tr>
+		<tr>
+			<td><table
+					class="table table-striped table-bordered table-hover table-condensed animation-table">
+					<thead>
+						<tr>
+							<th style="text-align: center;">NRO OC</th>
+							<th style="text-align: center;">Concepto</th>
+							<th style="text-align: center;">Nombre Proyecto</th>
+							<th style="text-align: center;">Cliente</th>
+							<th style="text-align: center;">Fecha Emision</th>
+							<th style="text-align: center;">Estado</th>
+							<th style="text-align: center;">Facturas Asociadas</th>
+							<th style="text-align: center;">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="oc in ocs">
+							<td width="10%">{{oc.numero}}</td>
+							<td width="10%">{{oc.concepto}}</td>
+							<td width="10%">{{oc.proyecto}}</td>
+							<td width="10%">{{oc.cliente}}</td>
+							<td width="10%">{{oc.fechaEmision}}</td>
+							<td width="10%">{{oc.estado}}</td>
+							<td width="10%">{{oc.facturas}}</td>
+							<td width="20%" style="text-align: center;">
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Cerrar" popover-trigger="mouseenter"
+									ng-click="goCerrar(oc.id, oc.numero, oc.estadoId)"
+									ng-if="isVigenteExtendida(oc.estadoId)" ng-show="oc.activa">
+									<span><img class="img-responsive" src="img/closeoc.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Entrar en Vigencia" popover-trigger="mouseenter"
+									ng-click="goVigente(oc.id, oc.numero, oc.estadoId)"
+									ng-if="isEnPreparacion(oc.estadoId)" ng-show="oc.activa">
+									<span><img class="img-responsive"
+										src="img/ocvigente.png" width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Modificar" popover-trigger="mouseenter"
+									ng-click="goView('/oc-admin/oc-edit', oc.id)">
+									<span><img class="img-responsive" src="img/edit.png"
+										width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Consultar" popover-trigger="mouseenter" tabindex="9"
+									ng-click="goView('/oc-admin/oc-view',oc.id)">
+									<span><img class="img-responsive" src="img/viewOC.png"
+										width='20px' height='20px' /></span>
+								</button>
+
+								<button type="button" class="btn btn-default btn-sm"
+									tabindex="10" popover="Desactivar" popover-trigger="mouseenter"
+									ng-click="goDelete(oc.id, oc.numero)" ng-show="oc.activa">
+									<span><img class="img-responsive" src="img/delete.png"
+										width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot ng-if="filter.totalPages!=0">
+						<tr>
+							<td colspan="10" paginated-button paginatedname="paginatedOCName" paginatedfilter="filterName">
+							</td>
+						</tr>
+					</tfoot>
+					<tr>
+						<td colspan="8">
+							<div ng-show="messageFilterOC"
+								class="alert alert-dismissable alert-warning text-center">
+								<strong>{{warningFilterOCMessage}}</strong>
+							</div>
+						</td>
+					</tr>
+				</table></td>
+		</tr>
+	</table>
+	<table class="table table-bordered">
+		<tr>
+			<td style="text-align: center;"><button type="button"
+					tabindex="11" class="btn btn-primary" ng-click="go('/')">Menú
+					Principal</button></td>
+		</tr>
+	</table>
+</div>
+<div ng-include="'protected/oc/modal-admin.html'" id="ocModalAdmin{{random}}"></div>

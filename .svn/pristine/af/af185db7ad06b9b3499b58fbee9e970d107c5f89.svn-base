@@ -1,0 +1,8 @@
+
+/* Verision 1.1.0*/
+        
+CREATE OR REPLACE VIEW "KANAV_STATE" ( "ID", "STATE" )
+AS
+SELECT R_ID , ST_NAME 
+from K_REQUEST R INNER JOIN K_STATE S ON S.ST_ID=R.ST_ID
+/* Verision 1.1.0*/

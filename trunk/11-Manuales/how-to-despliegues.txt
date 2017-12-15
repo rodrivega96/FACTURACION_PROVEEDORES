@@ -1,0 +1,54 @@
+How to despliegues:
+
+Al momento de generar un despliegue generar 2 carpetas una llamada produccion y otra pruebas. Realizar el war y tar tanto de los datos productivos como de
+los datos de pruebas, para luego poder desplegar en produccion la misma version, dado que el war y tar se realizan en base a la copia local y no en base 
+a un tag determinado.
+
+Backend:
+
+1- Modificar datos en conf.properties (por ejemplo base de datos)
+jdbc.url=jdbc:oracle:thin:@192.168.50.13:1521:orcl
+jdbc.username=afp
+jdbc.password=*******
+
+prueba:
+mail.user=Pruebas Sistemas Internos
+
+produccion:
+mail.user=Sistemas Internos
+
+Cambiar el nro de version
+
+2- Modificar nombre de usuario y grupo en cache-context.xml
+<hz:group
+                name="produccion-afp"
+                password="$produccion-afp$" />
+<hz:group
+                name="pruebas-afp"
+                password="$pruebas-afp$" />
+
+3- Exportar a war con el nombre "facpro-backend.war". Al momento de desplegar es necesario verificar las entidades de base de datos, el sistema automaticamente crea las tablas implicadas por lo que luego de desaplegar es necesario correr los scripts de creacion de datos de la version correspondiente. En caso de generar nuevas vistas en la BD es necesario crearlas antes de desplegar ya que de otra forma se crearan tablas con los nombres de las vistas.
+
+4- Ingresar a tomcat managesr (para pruebas 192.168.50.13:8080/manager/html), parar y replegar instancia existente (Es optimo pararla antes de replegarla). En caso de que el servidor se quede sin memoria y no responda, ingresar por consola ssh administrador@ipservidor y luego:
+   4-A- Ejecutar "Killall -9 java"
+   4-B- Ejecutar "cd /etc/init.d"
+   4-C- Ejecutar "sudo ./tomcat start"
+   4-D- Intentar desplegar nuevamamente desde tomcat manager html.
+5- Desplegar nuevo war.
+
+
+FrontEnd.
+
+1- Configurar datos en protected/configApp.js y asegurarse de cambiar el nro de version.
+
+2- Comprimir el contenido de webcontent:
+2-1 local#cd workspace/proyecto/WebContent
+2-2 local#tar -cvf front.tar * 
+2-3 local#scp front.tar administrador@192.168.50.13:/home/administrador
+2-4 local#ssh administrador@192.168.50.13
+2-5 server#rm -rf /var/www/si/*
+2-6 server#cd /var/www/si/
+2-7 server#tar -xvf /home/administrador/front.tar
+
+
+

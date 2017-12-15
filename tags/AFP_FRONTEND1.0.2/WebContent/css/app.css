@@ -1,0 +1,702 @@
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+.breadcrumb {
+	list-style: none;
+	overflow: hidden;
+	font: 16px Helvetica, Arial, Sans-Serif;
+}
+
+#splash {
+ position: absolute;
+ display: none;
+ top: 0; left: 0;
+ width: 100%;
+ height: 100%;
+ text-align: center;
+ background: #ff0;
+ opacity: .8;
+}
+
+.breadcrumb li {
+	float: left;
+}
+
+.navbar-nav {
+  margin: 7.5px -15px;
+  font: 16px Helvetica, Arial, Sans-Serif;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+  font: 16px Helvetica, Arial, Sans-Serif;
+}
+
+tr.styleQuestionHead td {
+	border-bottom: 2.5pt solid black;
+}
+
+
+
+html,button,input,select,textarea {
+	color: #222;
+}
+
+html {
+	font-size: 1em;
+	line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+	background: #174ba0;
+	text-shadow: none;
+}
+
+::selection {
+	background: #174ba0;
+	text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}
+
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+audio,canvas,img,video {
+	vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+	resize: vertical;
+}
+
+/* ==========================================================================
+   Browse Happy prompt
+   ========================================================================== */
+.browsehappy {
+	margin: 0.2em 0;
+	background: #ccc;
+	color: #000;
+	padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/*
+ * Suggested in http://angular-ui.github.io/bootstrap/
+ */
+.nav,.pagination,.carousel,.panel-title a {
+	cursor: pointer;
+}
+
+body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+/*.navbar {
+    margin-bottom: 20px;
+}       */
+.navbar a.navbar-brand {
+	padding: 15px 15px 15px;
+}
+
+/* Comment this style so that dropdown menu can be selected manually  */
+.dropdown:hover .dropdown-menu {
+	display: block;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Image replacement
+ */
+.ir {
+	background-color: transparent;
+	border: 0;
+	overflow: hidden;
+	/* IE 6/7 fallback */
+	*text-indent: -9999px;
+}
+
+.ir:before {
+	content: "";
+	display: block;
+	width: 0;
+	height: 150%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+.hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+.visuallyhidden {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+.visuallyhidden.focusable:active,.visuallyhidden.focusable:focus {
+	clip: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	position: static;
+	width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+.invisible {
+	visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,.clearfix:after {
+	content: " "; /* 1 */
+	display: table; /* 2 */
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.clearfix {
+	*zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+	/* Style adjustments for viewports that meet the condition */
+}
+
+@media print , ( -o-min-device-pixel-ratio : 5/4) , (
+		-webkit-min-device-pixel-ratio : 1.25) , ( min-resolution : 120dpi) {
+	/* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+@media print {
+	* {
+		background: transparent !important;
+		color: #000 !important; /* Black prints faster: h5bp.com/s */
+		box-shadow: none !important;
+		text-shadow: none !important;
+	}
+	a,a:visited {
+		text-decoration: underline;
+	}
+	a[href]:after {
+		content: " (" attr(href) ")";
+	}
+	abbr[title]:after {
+		content: " (" attr(title) ")";
+	}
+
+	/*
+     * Don't show links for images, or javascript/internal links
+     */
+	.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after {
+		content: "";
+	}
+	pre,blockquote {
+		border: 1px solid #999;
+		page-break-inside: avoid;
+	}
+	thead {
+		display: table-header-group; /* h5bp.com/t */
+	}
+	tr,img {
+		page-break-inside: avoid;
+	}
+	img {
+		max-width: 100% !important;
+	}
+	@page {
+		margin: 0.5cm;
+	}
+	p,h2,h3 {
+		orphans: 3;
+		widows: 3;
+	}
+	h2,h3 {
+		page-break-after: avoid;
+	}
+}
+
+
+.modal-body:before,
+.modal-body:after {
+    display: table;
+    content: " ";
+}
+.modal-header:before,
+.modal-header:after {
+    display: table;
+    content: " ";
+}
+
+/* Fix for Bootstrap 3 with Angular UI Bootstrap */
+.modal { 
+	display: block;
+}
+
+/* Custom dialog/modal headers */
+
+.dialog-header-error { background-color: #d2322d; }
+.dialog-header-wait { background-color: #428bca; }
+.dialog-header-notify { background-color: #eeeeee; }
+.dialog-header-confirm { background-color: #333333; }
+	.dialog-header-error span, .dialog-header-error h4,
+	.dialog-header-wait span, .dialog-header-wait h4,
+	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
+/* Ease Display */
+
+.pad { padding: 25px; }
+
+/* ===================== */
+.ng-modal-overlay {
+  /* A dark translucent div that covers the whole screen */
+  position:absolute;
+  z-index:9999;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:#000000;
+  opacity: 0.8;
+}
+.ng-modal-dialog {
+ /* A centered div above the overlay with a box shadow. */  
+  z-index: 9999;
+  position: fixed;
+  width: 40%; /* Default */
+ 
+  /* Center the dialog */
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  
+  border-radius:10px; 
+  -moz-border-radius:10px; /* Firefox */ 
+  -webkit-border-radius:10px; /* Safari y Chrome */
+  
+  background-color: #fff;
+  box-shadow: 2px 2px 20px #002;
+  
+  opacity:1;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;  
+}
+
+.ng-modal-dialog-content {
+  padding:10px;
+  text-align: left;
+}
+.ng-modal-close {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 120%;
+  display: inline-block;
+  font-weight: bold;
+  font-family: 'arial', 'sans-serif';
+}
+
+.max-width {
+	width: 100%;
+}
+
+.left {
+	float: left !important;
+	align: left;
+	text-align: left;
+	margin-right: 5px;
+}
+
+.right {
+	float: right !important;
+	align: right;
+	text-align: right;
+	margin-left: 5px;
+}
+
+.center {
+	float: center!important;
+	align: center;
+	text-align: center;
+}
+
+.navbar-default .navbar-nav > li > label {
+  color: #E3EAF6;
+  text-shadow: 1px 1px 1px #555;
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: -15px;
+}
+
+.hoverTable div > label[class*="radio"]{
+	background: #ffffff;
+}
+
+.hoverTable div > label[class*="radio"]:hover {
+    background-color: #D0E0EF;
+}
+
+.text-footer{
+	color: #e3eaf6;
+	text-shadow: 1px 1px 1px #666;
+}
+
+
+.button-blues {
+	color: #fff;
+	width: 120px;
+	height: 28px;
+	cursor: pointer;
+	font-family: Arial, Tahoma, sans-serif;
+	font-size: 1.0em;
+	font-weight: bold;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	border-width: 1px;
+	border-color: #0053a6 #0053a6 #000;
+	background-color: #6891e7;
+	background-image: -moz-linear-gradient(top,#4495e7 0, #0053a6 100%);
+	background-image: -ms-linear-gradient(top,#4495e7 0, #0053a6 100%);
+	background-image: -o-linear-gradient(top,#4495e7 0, #0053a6 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #4495e7),color-stop(100%, #0053a6));
+	background-image: -webkit-linear-gradient(top,#4495e7 0,#0053a6 100%);
+	background-image: linear-gradient(to bottom,#4495e7 0,#0053a6 100%);
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, .6);
+	-moz-box-shadow: inset 0 1px 0 rgba(256, 256, 256, .35);
+	-ms-box-shadow: inset 0 1px 0 rgba(256, 256, 256, .35);
+	-webkit-box-shadow: inset 0 1px 0 rgba(256, 256, 256, .35);
+	box-shadow: inset 0 1px 0 rgba(256, 256, 256, .35);
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#4495e7,EndColorStr=#0053a6);
+}
+
+.button-blues:hover {
+	border-color: #002d59 #002d59 #000;
+	-moz-box-shadow: inset 0 1px 0 rgba(256, 256, 256, 0.55), 1px 1px 3px rgba(0, 0, 0, 0.25);
+	-ms-box-shadow: inset 0 1px 0 rgba(256, 256, 256, 0.55), 1px 1px 3px rgba(0, 0, 0, 0.25);
+	-webkit-box-shadow: inset 0 1px 0 rgba(256, 256, 256, 0.55), 1px 1px 3px rgba(0, 0, 0, 0.25);
+	box-shadow: inset 0 1px 0 rgba(256, 256, 256, 0.55), 1px 1px 3px rgba(0, 0, 0, .25);
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#3a8cdf ,EndColorStr=#0053a6);
+	background-image: -moz-linear-gradient(top,#3a8cdf 0,#0053a6 100%);
+	background-image: -ms-linear-gradient(top,#3a8cdf 0,#0053a6 100%);
+	background-image: -o-linear-gradient(top,#3a8cdf 0,#0053a6 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#3a8cdf),color-stop(100%,#0053a6));
+	background-image: -webkit-linear-gradient(top,#3a8cdf 0,#0053a6 100%);
+	background-image: linear-gradient(to bottom,#3a8cdf 0,#0053a6 100%);
+}
+
+.button-blues:active {
+	border-color: #000 #002d59 #002d59;
+	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.2),0 1px 0 #fff;
+	-ms-box-shadow: inset 0 1px 3px rgba(0,0,0,0.2),0 1px 0 #fff;
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.2),0 1px 0 #fff;
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.2),0 1px 0 #fff;
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#005ab4,EndColorStr=#175ea6);
+	background-image: -moz-linear-gradient(top,#005ab4 0,#175ea6 100%);
+	background-image: -ms-linear-gradient(top,#005ab4 0,#175ea6 100%);
+	background-image: -o-linear-gradient(top,#005ab4 0,#175ea6 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#005ab4),color-stop(100%,#175ea6));
+	background-image: -webkit-linear-gradient(top,#005ab4 0,#175ea6 100%);
+	background-image: linear-gradient(to bottom,#005ab4 0,#175ea6 100%);
+}
+
+/* Para Safari */
+::selection {
+background: #E4A733;
+}
+
+/* Para Firefox */
+::-moz-selection {
+background: #E4A733;
+}
+
+#logoId{
+	transition: 2.5s ease;
+ 	-moz-transition: 2.5s ease; /* Firefox */
+ 	-webkit-transition: 2.5s ease; /* Chrome - Safari */
+ 	-o-transition: 2.5s ease; /* Opera */
+}
+ 
+#logoId:hover{
+	transform : rotate(360deg);
+	-moz-transform : rotate(360deg); /* Firefox */
+	-webkit-transform : rotate(360deg); /* Chrome - Safari */
+	-o-transform : rotate(360deg); /* Opera */
+}
+
+.listaAutorizadores{
+	list-style-type: none;
+    margin: 10px;    
+    padding: 0 0 0 18px;
+    font-size: 11pt; 
+    /*box-shadow: 0px 1px 2px rgba(0,0,0,.2);*/
+    box-shadow: 0px 1.5px 2px rgba(0,0,0,.3);
+}
+
+ul {
+    padding: 0 0 0 0px;
+}
+
+.size14 {
+	font-size: 14px;
+}
+
+.size15 {
+	font-size: 15px;
+}
+
+.size16 {
+	font-size: 16px;
+}
+
+.bajorrelieve {
+	background: #174BA0;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	text-shadow: 0px 4px 4px rgba(255,255,255,0.5),0px -1px 1px rgba(0,0,0,.4);
+}
+
+.redondeado {
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border: 0px solid #000000;
+}
+
+ul > li.ng-enter {  
+    -webkit-animation: bounceInDown .7s;
+    -moz-animation: bounceInDown .7s;
+    -ms-animation: bounceInDown .7s;
+    animation: bounceInDown .7s;
+}
+
+ul > li.ng-leave {  
+    -webkit-animation: bounceOutLeft .8s;
+    -moz-animation: bounceOutLeft .8s;
+    -ms-animation: bounceOutLeft .8s;
+    animation: bounceOutLeft .8s;
+}
+
+table .ng-hide-remove {  
+    -webkit-animation: zoomIn .8s;
+    -moz-animation: zoomIn .8s;
+    -ms-animation: zoomIn .8s;
+    animation: zoomIn .8s;
+}
+
+*{box-sizing: border-box;}
+.wrapper {margin: 0 auto; width: 960px; }
+.pdf-controls { width: 100%; display: block; background: #eee; padding: 1em;}
+/* .rotate0 {-webkit-transform: rotate(0deg); transform: rotate(0deg); } 
+ .rotate90 {-webkit-transform: rotate(0deg); transform: rotate(0deg); } 
+ .rotate180 {-webkit-transform: rotate(0deg); transform: rotate(0deg); } 
+ .rotate270 {-webkit-transform: rotate(0deg); transform: rotate(0deg); } */
+.fixed { position: relative; top: 0; z-index: 100; width: 100%; padding: 1em; background: rgba(238, 238, 238,.9); }
+
+.animate-repeat.ng-leave.ng-leave-active,.animate-repeat.ng-move,.animate-repeat.ng-enter
+	{
+	opacity: 0;
+	max-height: 0;
+}
+
+.animate-repeat.ng-leave,.animate-repeat.ng-move.ng-move-active,.animate-repeat.ng-enter.ng-enter-active
+	{
+	opacity: 1;
+	max-height: 40px;
+}
+
+.animate-repeat.ng-move,.animate-repeat.ng-enter,.animate-repeat.ng-leave
+	{
+	-webkit-transition: all linear 0.7s;
+	transition: all linear 0.7s;
+}
+
+.animation-table.ng-enter {
+	-webkit-animation: zoomIn .8s;
+	-moz-animation: zoomIn .8s;
+	-ms-animation: zoomIn .8s;
+	animation: zoomIn .8s;
+}
+
+.animation-table.ng-leave {
+	-webkit-animation: zoomOut .7s;
+	-moz-animation: zoomOut .7s;
+	-ms-animation: zoomOut .7s;
+	animation: zoomOut .7s;
+}
+
+.modal-wait {
+	z-index: 10;
+	position: fixed;
+	width: 100%;
+	height: 120%;
+	opacity: 0.5;
+	filter: alpha(opacity = 40);
+	background-color: #505050;
+}
+
+.modal-wait.ng-hide-add.ng-hide-add-active {
+    visibility: visible;
+    opacity: 0;
+    transition: opacity 0.7s, visibility 0.7s;
+    display: block !important;
+}
+
+.ng-modal-emergente {
+	top: 10%;
+	left: 40%;
+	margin-left: -10%;
+	z-index: 9999;
+	position: fixed;
+	width: 40%;
+	display: inline-block;
+	vertical-align: middle;
+	background-color: #fff;
+	box-shadow: 2px 2px 20px #002;
+	opacity: 1;
+	border-radius: 10px;
+}
+
+.ng-modal-emergente {
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	-webkit-border-radius: 10px;
+}
+
+.ng-modal-emergente-top {
+	top: 30% !important;
+}
+
+.ng-modal-emergente.ng-hide-add.ng-hide-add-active {
+	-webkit-animation: zoomOut .7s;
+	-moz-animation: zoomOut .7s;
+	-ms-animation: zoomOut .7s;
+	animation: zoomOut .7s;
+	display: block !important;
+}
+
+.ng-modal-emergente.ng-hide-remove.ng-hide-remove-active {
+	-webkit-animation: zoomIn .7s;
+	-moz-animation: zoomIn .7s;
+	-ms-animation: zoomIn .7s;
+	animation: zoomIn .7s;
+	display: block !important;
+}

@@ -1,0 +1,234 @@
+<div class="jumbotron text-center">
+	<table
+		class="table table-striped table-bordered table-hover table-condensed">
+		<tr>
+			<td align="right"><b>{{count}}</b></td>
+		</tr>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>
+							<button type="button" class="btn btn-default btn-sm"
+								popover="Ocultar Filtro" popover-trigger="mouseenter"
+								ng-show="isShowFilter" ng-click="showFilter(false);">
+								<span><img class="img-responsive" src="img/minus.png"
+									width='20px' height='20px' /></span>
+							</button>
+							<button type="button" class="btn btn-default btn-sm"
+								popover="Mostrar Filtro" popover-trigger="mouseenter"
+								ng-show="!isShowFilter" ng-click="showFilter(true);">
+								<span><img class="img-responsive" src="img/plus.png"
+									width='20px' height='20px' /></span>
+							</button>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+
+				<table ng-show="isShowFilter"
+					class="table table-striped table-bordered table-hover table-condensed">
+					<tr>
+						<td><label name="cuitL">CUIT</label></td>
+						<td><input style="width: 90%" type="text" name="cuit"
+							ng-model="extFilter.cuit" /></td>
+						<td><label name="rzL">Razón Social</label></td>
+						<td><input style="width: 90%" type="text" name="rz"
+							ng-model="extFilter.razon" /></td>
+						<td><label name="numeroL">Número</label></td>
+						<td><input style="width: 90%" type="text" name="numero"
+							ng-model="extFilter.numero" /></td>
+					</tr>
+					<tr>
+						<td><label name="ccL">Cta. Contable</label></td>
+						<td><input style="width: 90%" type="text" name="cc"
+							ng-model="extFilter.cc" /></td>
+						<td><label name="centrocL">Ctro. Costo</label></td>
+						<td><input style="width: 90%" type="text" name="centroc"
+							ng-model="extFilter.centroc" /></td>
+						<td><label name="wfL">Work Flow</label></td>
+						<td><select name="tipo" style="width: 90%" ng-model="extFilter.wf" id="idwf"
+							ng-options="worflow.id as worflow.name for worflow in wfOptions">
+								<option value=""></option>
+						</select></td>
+					</tr>
+					<tr>
+						<td><label>Fecha Vencimiento Desde</label></td>
+						<td><input style="width: 90%" type="text" name="fvDesde"
+							ng-model="extFilter.fvDesde" oninput="this.value=''"
+							id="fvDateCalendarDesde" /></td>
+						<td><label>Fecha Vencimiento Hasta</label></td>
+						<td><input style="width: 90%" type="text" name="fvHasta"
+							ng-model="extFilter.fvHasta" oninput="this.value=''"
+							id="fvDateCalendarHasta" /></td>
+						<td><label name="TipoL">Tipo Factura</label></td>
+						<td><select name="tipo" style="width: 90%" ng-model="extFilter.tipo" id="idTipo"
+							ng-options="tipo.id as tipo.name for tipo in tipos">
+								<option value=""></option>
+						</select></td>
+
+					</tr>
+					<tr>
+						<td><label>Fecha Imputación Desde</label></td>
+						<td><input style="width: 90%" type="text" name="fiDesde"
+							ng-model="extFilter.fiDesde" oninput="this.value=''"
+							id="fiDateCalendarDesde" /></td>
+						<td><label>Fecha Imputación Hasta</label></td>
+						<td><input style="width: 90%" type="text" name="fiHasta"
+							ng-model="extFilter.fiHasta" oninput="this.value=''"
+							id="fiDateCalendarHasta" /></td>
+						<td><label name="TipoL">Estado</label></td>
+						<td><select name="estado" style="width: 90%" ng-model="extFilter.estado"
+							id="idEstado"
+							ng-options="estado.id as estado.name for estado in estadosFactura">
+								<option value=""></option>
+						</select></td>
+					</tr>
+					<tr>
+						<td><label>Fecha Vencimiento Adm Desde</label></td>
+						<td><input style="width: 90%" type="text" name="flfDesde"
+							ng-model="extFilter.flfDesde" oninput="this.value=''"
+							id="flfDateCalendarDesde" /></td>
+						<td><label>Fecha Vencimiento Adm Hasta</label></td>
+						<td><input style="width: 90%" type="text" name="flfHasta"
+							ng-model="extFilter.flfHasta" oninput="this.value=''"
+							id="flfDateCalendarHasta" /></td>
+						
+						<td colspan="2">
+							<button type="button" popover="Buscar"
+									popover-trigger="mouseenter" class="btn btn-default btn-sm"
+									ng-click="loadFilter()">
+								<center>
+									<img class="img-responsive" src="img/search.png" width='80%'
+											height='60%' />
+								</center>
+								Refrescar
+							</button>
+							
+							<button type="button" popover="Limpiar Filtros" style="right: 5px;"
+									popover-trigger="mouseenter" class="btn btn-default btn-sm"
+									ng-click="clearFilter()">
+								<center>
+									<img class="img-responsive" src="img/wiping-64.png" width='60%' height='60%'/>
+								</center>								
+							</button>
+						</td>							
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><table
+					class="table table-striped table-bordered table-hover table-condensed">
+					<thead>
+						<tr>
+							<th style="text-align: center;">CUIT</th>
+							<th style="text-align: center;">Razon Social</th>
+							<th style="text-align: center;">N° Factura</th>
+							<th style="text-align: center;">Descripcion</th>
+							<th style="text-align: center;">Dias para Vto</th>
+
+
+							<th style="text-align: center;">Importe Neto</th>
+							<th style="text-align: center;">Estado WF</th>
+							<th style="text-align: center;">Autorizaciones</th>
+							<th style="text-align: center;">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="factura in facturas">
+							<td>{{factura.cuit}}</td>
+							<td>{{factura.razonSocial}}</td>
+							<td>{{factura.nroFactura}}</td>
+							<td>{{factura.descripcion}}</td>
+							<td>{{factura.diasVencer}}</td>
+
+							<td>{{factura.importeNeto}}</td>
+							<td>{{factura.estado}}</td>
+							<td>{{factura.autorizaciones}}</td>
+
+
+
+							<td style="text-align: center">
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Ver Factura" popover-trigger="mouseenter"
+									ng-click="goURL('factura-consult-admin/factura-consult-form',factura.idFacturaAdm)">
+									<span><img class="img-responsive"
+										src="img/magnifyingGlass.png" width='20px' height='20px' /></span>
+								</button>
+
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Ver Archivos" popover-trigger="mouseenter"
+									ng-show="factura.canLoadWf"
+									ng-click="goURL('/factura-consult-admin/factura-consult-file',factura.id)">
+									<span><img class="img-responsive" src="img/see_file.png"
+										width='20px' height='20px' /></span>
+								</button>
+
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Detalle Workflow" popover-trigger="mouseenter"
+									ng-show="{{factura.workflow=='Si'}}"
+									ng-click="goURL('/factura-consult-admin/factura-consult-workflow',factura.idFacturaAdm)">
+									<span><img class="img-responsive" src="img/wf.png"
+										width='20px' height='20px' /></span>
+								</button>
+
+							</td>
+						</tr>
+					</tbody>
+
+
+					<tfoot ng-if="filter.totalPages!=0">
+						<tr>
+							<td colspan="2">
+								<button ng-click="firstPage()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Primera"
+									ng-disabled="filter.page == 1">
+									<span><img class="img-responsive" src="img/first.png"
+										width='60%' height='60%' /></span>
+								</button>
+								<button ng-click="prevPage()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Previa"
+									ng-disabled="filter.page == 1">
+									<span><img class="img-responsive" src="img/prev.png"
+										width='60%' height='60%' /></span>
+								</button>
+							<td colspan="5"><a ng-repeat="number in filter.range"
+								ng-bind="number" ng-click="goPage(number)"
+								ng-class="{active: number == filter.page}" href="" class="btn">
+									<i class="icon-fast-forward"></i>
+							</a></td>
+							<td colspan="2"><button ng-click="nextPage()"
+									class="btn btn-default btn-sm" data-toggle="tooltip"
+									data-placement="top" title="Siguiente"
+									ng-disabled="filter.page == filter.totalPages">
+									<span><img class="img-responsive" src="img/next.png"
+										width='60%' height='60%' /></span>
+								</button>
+								<button ng-click="lastPage()" class="btn btn-default btn-sm"
+									data-toggle="tooltip" data-placement="top" title="Ultima"
+									ng-disabled="filter.page == filter.totalPages">
+									<span><img class="img-responsive" src="img/last.png"
+										width='60%' height='60%'></span>
+								</button></td>
+						</tr>
+					</tfoot>
+
+					<tfoot ng-if="filter.totalPages==filter.page">
+						<tr style="font-weight: bold;">
+							<td colspan="4"></td>
+							<td>Total:</td>
+							<td>${{total}}</td>
+						</tr>
+					</tfoot>
+				</table></td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><button type="button"
+					class="btn btn-primary" ng-click="go('/')">Menú Principal</button></td>
+		</tr>
+	</table>
+</div>

@@ -1,0 +1,45 @@
+<div class="text-center">
+	<form name="form-student" ng-submit="saveUs()">
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<td width="20%" align="left"><label name="name">Nombre*</label>
+				<td align="left"><input ng-disabled="inactive"
+					style="width: 60%" type="text" name="name" ng-model="user.name"
+					required />
+			</tr>
+			<tr>
+				<td width="20%" align="left"><label name="lastName">Apellido*</label>
+				<td align="left"><input ng-disabled="inactive"
+					style="width: 60%" type="text" name="lastName"
+					ng-model="user.lastName" required />
+			</tr>
+			<tr>
+				<td width="20%" align="left"><label name="mail">E-mail*</label>
+				<td align="left"><input ng-disabled="inactive"
+					style="width: 60%" type="email" name="mail" ng-model="user.mail"
+					required />
+			</tr>
+			<tr>
+				<td width="20%" align="left"><label name="job">Puesto</label>
+				<td align="left"><input ng-disabled="inactive"
+					style="width: 60%" type="text" name="job" ng-model="user.job" />
+			</tr>
+			<tr>
+				<td width="20%" align="left"><label name="stateType">Estado</label>
+				<td align="left"><select name="state" ng-model="user.active"
+					id="idState">
+						<option value="{{state.id}}" ng-repeat="state in states">
+							{{state.name}}</option>
+				</select>
+			</tr>
+		</table>
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<td colspan="2"><input type='submit' class="btn btn-primary"
+					value="Grabar" />
+					<button type='button' class="btn btn-primary"
+						ng-click="backUsAdm()">Volver</button></td>
+			</tr>
+		</table>
+	</form>
+</div>

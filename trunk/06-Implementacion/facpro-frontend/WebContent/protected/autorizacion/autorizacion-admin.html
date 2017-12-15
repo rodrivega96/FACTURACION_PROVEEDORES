@@ -1,0 +1,330 @@
+<script type='text/javascript'
+	src="protected/autorizacion/AutorizacionController.js"></script>
+<script type='text/javascript'
+	src="protected/autorizacion/AutorizacionModel.js"></script>
+<div class="jumbotron text-center">
+	<table
+		class="table table-striped table-bordered table-hover table-condensed">
+		<tr>
+			<td align="right"><b>{{count}}</b></td>
+		</tr>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>
+							<button type="button" class="btn btn-default btn-sm"
+								popover="Ocultar Filtro" popover-trigger="mouseenter"
+								ng-show="isShowFilter" ng-click="showFilter(false);">
+								<span><img class="img-responsive" src="img/minus.png"
+									width='20px' height='20px' /></span>
+							</button>
+							<button type="button" class="btn btn-default btn-sm"
+								popover="Mostrar Filtro" popover-trigger="mouseenter"
+								ng-show="!isShowFilter" ng-click="showFilter(true);">
+								<span><img class="img-responsive" src="img/plus.png"
+									width='20px' height='20px' /></span>
+							</button>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+			<tr>
+			<td>
+
+				<table ng-show="isShowFilter"
+					class="table table-striped table-bordered table-hover table-condensed animation-table">
+					<tr>
+						<td><label name="ccL">Cta. Contable</label></td>
+						<td><input style="width: 90%" type="text" name="cc"
+							ng-model="extFilter.cc" /></td>
+						<td><label name="centrocL">Ctro. Costo</label></td>
+						<td><input style="width: 90%" type="text" name="centroc"
+							ng-model="extFilter.centroc" /></td>
+						<td><label name="numeroL">Número</label></td>
+						<td><input style="width: 90%" type="text" name="numero"
+							ng-model="extFilter.numero" /></td>
+					</tr>
+					<tr>
+						<td><label>Fecha Vencimiento Desde</label></td>
+						<td><input style="width: 90%" type="text" name="fvDesde"
+							ng-model="extFilter.fvDesde" oninput="this.value=''"
+							id="authFechaVencimientoDesde" date-picker-ng
+							max-date-picker="extFilter.fvHasta" /></td>
+						<td><label>Fecha Vencimiento Hasta</label></td>
+						<td><input style="width: 90%" type="text" name="fvHasta"
+							ng-model="extFilter.fvHasta" oninput="this.value=''"
+							id="authFechaVencimientoHasta" date-picker-ng
+							min-date-picker="extFilter.fvDesde" /></td>
+						<td><label name="TipoL">Tipo Factura</label></td>
+						<td><select name="tipo" style="width: 90%"
+							ng-model="extFilter.tipo" id="idTipo"
+							ng-options="tipo.id as tipo.name for tipo in tipos">
+								<option value=""></option>
+						</select></td>
+
+					</tr>
+					<tr>
+					<td><label>Fecha Factura Desde</label></td>
+						<td><input style="width: 90%" type="text" name="ffacDesde"
+							ng-model="extFilter.ffacDesde" oninput="this.value=''"
+							id="authFechaFacturaDesde" date-picker-ng
+							max-date-picker="extFilter.ffacHasta" /></td>
+						<td><label>Fecha Factura Hasta</label></td>
+						<td><input style="width: 90%" type="text" name="ffacHasta"
+							ng-model="extFilter.ffacHasta" oninput="this.value=''"
+							id="authFechaFacturaHasta" date-picker-ng
+							min-date-picker="extFilter.ffacDesde" /></td>
+						<td><label name="cuitL">CUIT</label></td>
+						<td><input style="width: 90%" type="text" name="cuit"
+							ng-model="extFilter.cuit" /></td>
+					</tr>
+					<tr>
+						
+						<td><label name="rzL">Razón Social</label></td>
+						<td><input style="width: 90%" type="text" name="rz"
+							ng-model="extFilter.razon" /></td>
+						<td colspan="2"></td>
+						<td colspan="2" style="vertical-align: middle;">
+							<button type="button" popover="Buscar"
+								popover-trigger="mouseenter" class="btn btn-default btn-sm"
+								ng-click="loadFilter()">
+								<center>
+									<img class="img-responsive" src="img/search.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+
+							<button type="button" popover="Limpiar Filtros"
+								style="right: 5px;" popover-trigger="mouseenter"
+								class="btn btn-default btn-sm" ng-click="clearFilter()">
+								<center>
+									<img class="img-responsive" src="img/wiping.png" width='80%'
+										height='60%' />
+								</center>
+							</button>
+						</td>	
+
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr ng-if="showTable">
+			<td>
+				<table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th width="15%" style="text-align: center;"><a
+								href="javascript:" ng-click="order('razonSocial','razonSocial')">Razon
+									Social<span ng-if="filter.varlocal == 'razonSocial'"><img
+										style="float: right;" ng-if="!filter.order"
+										class="img-responsive" src="img/sort_desc.png" width='10px'
+										height='10px' /><img style="float: right;"
+										ng-if="filter.order" class="img-responsive"
+										src="img/sort_asc.png" width='10px' height='10px' /></span>
+							</a></th>
+							<th width="25%" style="text-align: center;"><a
+								href="javascript:" ng-click="order('descripcion','descripcion')">Descripción<span
+									ng-if="filter.varlocal == 'descripcion'"><img
+										style="float: right;" ng-if="!filter.order"
+										class="img-responsive" src="img/sort_desc.png" width='10px'
+										height='10px' /><img style="float: right;"
+										ng-if="filter.order" class="img-responsive"
+										src="img/sort_asc.png" width='10px' height='10px' /></span></a></th>
+							<th width="12%" style="text-align: center;"><a
+								href="javascript:"
+								ng-click="order('vencimiento','diaVencimiento')">Días para
+									el vencimiento<span ng-if="filter.varlocal == 'diaVencimiento'"><img
+										style="float: right;" ng-if="!filter.order"
+										class="img-responsive" src="img/sort_desc.png" width='10px'
+										height='10px' /><img style="float: right;"
+										ng-if="filter.order" class="img-responsive"
+										src="img/sort_asc.png" width='10px' height='10px' /></span>
+							</a></th>
+							<th width="9%" style="text-align: center;"><a
+								href="javascript:"
+								ng-click="order('vencimiento','fvencimiento')">Vencimiento<span
+									ng-if="filter.varlocal == 'fvencimiento'"><img
+										style="float: right;" ng-if="!filter.order"
+										class="img-responsive" src="img/sort_desc.png" width='10px'
+										height='10px' /><img style="float: right;"
+										ng-if="filter.order" class="img-responsive"
+										src="img/sort_asc.png" width='10px' height='10px' /></span></a></th>
+							<th width="7%" style="text-align: center;"><a
+								href="javascript:" ng-click="order('gralBruto','gralBruto')">Neto<span
+									ng-if="filter.varlocal == 'gralBruto'"><img
+										style="float: right;" ng-if="!filter.order"
+										class="img-responsive" src="img/sort_desc.png" width='10px'
+										height='10px' /><img style="float: right;"
+										ng-if="filter.order" class="img-responsive"
+										src="img/sort_asc.png" width='10px' height='10px' /></span></a></th>
+							<th width="7%" style="text-align: center;"><a
+								href="javascript:" ng-click="order('gralIvaInc','gralIvaInc')">IVA<span
+									ng-if="filter.varlocal == 'gralIvaInc'"><img
+										style="float: right;" ng-if="!filter.order"
+										class="img-responsive" src="img/sort_desc.png" width='10px'
+										height='10px' /><img style="float: right;"
+										ng-if="filter.order" class="img-responsive"
+										src="img/sort_asc.png" width='10px' height='10px' /></span></a></th>
+							<th width="7%" style="text-align: center;"><a
+								href="javascript:" ng-click="order('gralNeto','gralNeto')">Total<span
+									ng-if="filter.varlocal == 'gralNeto'"><img
+										style="float: right;" ng-if="!filter.order"
+										class="img-responsive" src="img/sort_desc.png" width='10px'
+										height='10px' /><img style="float: right;"
+										ng-if="filter.order" class="img-responsive"
+										src="img/sort_asc.png" width='10px' height='10px' /></span></a></th>
+							<th width="18%" style="text-align: center;"><a>Acciones</a></th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="factura in facturas" ng-switch
+						on="dataCollapse[$index]" class="animate-repeat">
+						<tr title="Click para ver mas datos de la factura."
+							id="{{$index}}" style="background-color: #CACACA;"
+							ng-click="selectTableRow($index, factura.idFacturaAdm, factura.id)">
+							<td style="cursor: pointer;">{{factura.razonSocial}}</td>
+							<td style="cursor: pointer;">{{factura.descripcion}}</td>
+							<td style="cursor: pointer;">{{factura.diasVencer}}</td>
+							<td style="cursor: pointer;">{{factura.fechaVencimiento}}</td>
+							<td style="cursor: pointer;">$ {{factura.importeNeto}}</td>
+							<td style="cursor: pointer;">$ {{factura.iva}}</td>
+							<td style="cursor: pointer;">$ {{factura.importeTotal}}</td>
+							<td style="text-align: center; cursor: pointer;">
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Autorizar" popover-trigger="mouseenter"
+									ng-click="goAuthorize(factura.id,null, $index)">
+									<span><img class="img-responsive"
+										src="img/wf_authorize.png" width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Rechazar" popover-trigger="mouseenter"
+									ng-click="goDiscard(factura.id,null, $index)">
+									<span><img class="img-responsive"
+										src="img/wf_discard.png" width='20px' height='20px' /></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm"
+									popover="Solicitar más información"
+									popover-trigger="mouseenter"
+									ng-click="goInformation(factura.id, $index)">
+									<span><img class="img-responsive"
+										src="img/wf_information.png" width='20px' height='20px' /></span>
+								</button>
+							</td>
+						</tr>
+						<tr ng-switch-when="true">
+							<td colspan="8">
+								<table class="table table-bordered table-condensed">
+									<thead>
+										<tr style="background-color: #F0F0F0;">
+											<th colspan="5" width="100%" style="text-align: center;">Datos
+												Factura</th>
+										</tr>
+										<tr>
+											<th width="15%" style="text-align: center;">CUIT</th>
+											<th width="15%" style="text-align: center;">Numero</th>
+											<th width="30%" style="text-align: center;">Descripcion</th>
+											<th width="20%" style="text-align: center;">Fecha
+												Factura</th>
+											<th width="20%" style="text-align: center;">Detalle</th>
+										</tr>
+										<tr>
+											<td>{{factura.cuit}}</td>
+											<td>{{factura.nroFactura}}</td>
+											<td>{{factura.descripcion}}</td>
+											<td>{{factura.fechaFactura}}</td>
+											<td style="text-align: center">
+												<button type="button" class="btn btn-default btn-sm"
+													popover="Ver archivos" popover-trigger="mouseenter"
+													ng-click="goUploadFile('/autorizacion-admin/autorizacion-file-form',factura.id)">
+													<span><img class="img-responsive"
+														src="img/see_file.png" width='20px' height='20px' /></span>
+												</button>
+												<button type="button" class="btn btn-default btn-sm"
+													popover="Historial de Estados" popover-trigger="mouseenter"
+													ng-click="goDetailWF('/autorizacion-admin/detalle-workflow',factura.idFacturaAdm)">
+													<span><img class="img-responsive" src="img/wf.png"
+														width='20px' height='20px' /></span>
+												</button>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="5"></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr style="background-color: #F0F0F0;">
+											<th colspan="5" width="100%" style="text-align: center;">Centros</th>
+										</tr>
+										<tr>
+											<th width="15%" style="text-align: center;">Numero</th>
+											<th width="15%" style="text-align: center;">Cuenta</th>
+											<th colspan="2" width="30%" style="text-align: center;">Centro</th>
+											<th width="20%" style="text-align: center;">Importe</th>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr ng-repeat="asientos in facHistorial.asientos">
+											<td width="15%">{{asientos.nroCentroCostos}}</td>
+											<td width="15%">{{asientos.descCuenta}}</td>
+											<td colspan="2" width="30%">{{asientos.descControl}}</td>
+											<td width="20%">${{asientos.importeNeto}}</td>
+										</tr>
+										<tr>
+											<ng-pdf
+												template-url="protected/template/templateViewPDF.html"
+												maxzoomin="1.5" minzoomout="0.3" canvasid="pdf" scale="0.5"
+												ng-if="showPDF"></ng-pdf>
+										</tr>
+									</tfoot>
+								</table>
+								<table class="table table-bordered table-condensed"
+									ng-show="kanav">
+									<tr style="background-color: #F0F0F0;">
+										<th colspan="2" width="100%" style="text-align: center;">Kanav</th>
+									</tr>
+									<tr>
+										<th width="30%" style="text-align: center;">Numero</th>
+										<th width="70%" style="text-align: center;">Estado</th>
+									</tr>
+									<tr>
+										<td>{{facHistorial.kanav}}</td>
+										<td>{{facHistorial.kanavState}}</td>
+									</tr>
+								</table>
+								<table class="table table-bordered table-condensed"
+									ng-show="factura.observacion != null">
+									<tr style="background-color: #F0F0F0;">
+										<th colspan="2" width="100%" style="text-align: center;">Observaciones
+											Generales</th>
+									</tr>
+									<tr>
+										<td align="left" width="100%">{{factura.observacion}}</td>
+									</tr>
+								</table>
+								<hr
+									style="border: solid; color: #4698D2; background-color: #4698D2;" />
+							</td>
+						</tr>
+					</tbody>
+					<tfoot ng-if="filter.totalPages!=0">
+						<tr>
+							<td colspan="9" paginated-button
+								paginatedname="paginatedAutoName" paginatedfilter="filterName"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="table table-bordered">
+		<tr>
+			<td ng-show="facturaMessage"
+				class="alert alert-dismissable alert-warning"><strong>{{warningFacturaMessage}}</strong></td>
+		</tr>
+		<tr>
+			<td style="text-align: center;"><button type="button"
+					class="btn btn-primary" ng-click="go('/')">Menú Principal</button></td>
+		</tr>
+	</table>
+</div>

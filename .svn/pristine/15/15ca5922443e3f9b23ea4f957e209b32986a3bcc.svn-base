@@ -1,0 +1,278 @@
+<div class="text-center">
+	<form name="form-student" ng-submit="saveOC()">
+		<table class="table table-bordered table-hover">
+			<tr>
+				<td colspan="2">
+					<table class="table table-striped table-bordered table-hover">
+						<tr>
+							<td width="10%" align="left"><label name="nro">Nro
+									OC*</label>
+							<td align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="nro" ng-model="oc.nro"
+								required /></td>
+							<td width="10%" align="left"><label name="date">Fecha
+									Emisión*</label></td>
+							<td align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="date" id="fechaDesdeId"
+								ng-model="oc.date" required /></td>
+							<td align="left" rowspan="3"><input type="Radio"
+								name="group" ng-disabled="inactive">Externa <br> <input
+								type="Radio" name="group" ng-disabled="inactive">Interna
+								Definitiva <br> <input type="Radio" name="group"
+								ng-disabled="inactive">Interna Provisoria</td>
+						</tr>
+						<tr>
+							<td width="20%" align="left"><label name="state">Estado</label>
+							<td align="left"><select name="state" ng-model="oc.state"
+								ng-disabled="{{inactive}}" id="idState">
+									<option value="{{state.id}}" ng-repeat="state in states">
+										{{state.name}}</option>
+							</select></td>
+							<td width="10%" align="left"><label name="expiration">Vencimiento*</label>
+							<td align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="expiration"
+								id="fechaVencimientoId" ng-model="oc.expiration" required /></td>
+						</tr>
+						<tr>
+							<td width="10%" align="left"><label name="client">Cliente*</label>
+							<td align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="client"
+								ng-model="oc.client" required /></td>
+							<td width="10%" align="left"><label name="contact">Contacto*</label>
+							<td align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="contact"
+								ng-model="oc.contact" required /></td>
+						</tr>
+						<tr>
+							<td width="10%" align="left"><label name="responsible">Responsable*</label>
+							<td align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="responsible"
+								ng-model="oc.responsible" required /></td>
+							<td width="10%" align="left"><label name="period">Periodo*</label></td>
+							<td colspan="2" align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="period"
+								ng-model="oc.period" required /></td>
+						</tr>
+						<tr>
+							<td width="10%" align="left"><label name="coin">Moneda*</label>
+							<td align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="coin" ng-model="oc.coin"
+								required /></td>
+							<td width="10%" align="left"><label name="condition">Condicion
+									Pago*</label></td>
+							<td colspan="2" align="left"><input ng-disabled="inactive"
+								style="width: 80%" type="text" name="condition"
+								ng-model="oc.condition" required /><label>Cant. días</label></td>
+						</tr>
+						<tr>
+							<td width="10%" align="left"><label name="concept">Concepto*</label>
+							<td colspan="4" align="left"><input ng-disabled="inactive"
+								style="width: 90%" type="text" name="concept"
+								ng-model="oc.concept" required /></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td width="95%"><b>Items del Pedido</b></td>
+				<td align="right" width="5%"><button type="button"
+						class="btn btn-default btn-sm" popover="Agregar Detalle"
+						popover-trigger="mouseenter" ng-click="goNewDetail()"
+						ng-show="!inactive">
+						<span><img class="img-responsive" src="img/new.png"
+							width='20px' height='20px' /></span>
+					</button></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table class="table table-striped table-bordered table-hover"
+						ng-table="tableDetalle">
+						<thead>
+							<tr>
+								<td>Cantidad</td>
+								<td>Unidad</td>
+								<td>Descripción</td>
+								<td>Precio Unitario</td>
+								<td>Precio Total</td>
+								<td ng-show="!inactive">Acciones</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="detalle in $data">
+								<td>{{detalle.count}}</td>
+								<td>{{detalle.unit}}</td>
+								<td>{{detalle.description}}</td>
+								<td>{{detalle.price}}</td>
+								<td>{{detalle.total}}</td>
+								<td ng-show="!inactive">
+									<button type="button" class="btn btn-default btn-sm"
+										popover="Modificar" popover-trigger="mouseenter"
+										ng-click="goEditDetail()">
+										<span><img class="img-responsive" src="img/edit.png"
+											width='20px' height='20px' /></span>
+									</button>
+									<button type="button" class="btn btn-default btn-sm"
+										popover="Eliminar" popover-trigger="mouseenter"
+										ng-click="goDeleteDetail()">
+										<span><img class="img-responsive" src="img/delete.png"
+											width='20px' height='20px' /></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="2" style="vertical-align: middle;">Total</th>
+								<th style="text-align: left; vertical-align: middle;"
+									colspan="4"><output>${{total}}</output></th>
+							</tr>
+						</tfoot>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td width="95%"><b>Proyectos por OC</b></td>
+				<td align="right" width="5%"><button type="button"
+						class="btn btn-default btn-sm" popover="Agregar Proyecto"
+						popover-trigger="mouseenter" ng-click="goNewProyect()"
+						ng-show="!inactive">
+						<span><img class="img-responsive" src="img/new.png"
+							width='20px' height='20px' /></span>
+					</button></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table class="table table-striped table-bordered table-hover"
+						ng-table="tableProyect">
+						<thead>
+							<tr>
+								<td>Id Proyecto</td>
+								<td>Nombre Proyecto</td>
+								<td>PM</td>
+								<td ng-show="!inactive">Acciones</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="proyect in $data">
+								<td>{{proyect.id}}</td>
+								<td>{{proyect.name}}</td>
+								<td>{{proyect.pm}}</td>
+								<td ng-show="!inactive">
+									<button type="button" class="btn btn-default btn-sm"
+										popover="Modificar" popover-trigger="mouseenter"
+										ng-click="goEditProyect()">
+										<span><img class="img-responsive" src="img/edit.png"
+											width='20px' height='20px' /></span>
+									</button>
+									<button type="button" class="btn btn-default btn-sm"
+										popover="Eliminar" popover-trigger="mouseenter"
+										ng-click="goDeleteProyect()">
+										<span><img class="img-responsive" src="img/delete.png"
+											width='20px' height='20px' /></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<td colspan="2"><input type='submit' class="btn btn-primary"
+					value="Grabar" />
+					<button type='button' class="btn btn-primary" ng-click="backAdm()">Volver</button></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<!-- MODAL DETAIL -->
+<div id="modalDetailId" ng-show="modalDetail" class="ng-modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" ng-click="closeDetail()" class="close"
+				data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Detalle Orden de Compra</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<form name="form-detail" id="formDetail" ng-submit="closeDetail()">
+					<table
+						class="table table-striped table-bordered table-hover table-condensed">
+						<tr>
+							<td width="40%" align="left"><label name="name">Cantidad
+							</label>
+							<td align="left"><input type="number" dir="rtl" step="1"
+								tabindex="1">
+						</tr>
+						<tr>
+							<td width="20%" align="left"><label name="unit">Unidad</label>
+							<td align="left"><select class="max-width" name="unit"
+								ng-model="valueUnit" id="idUnit" tabindex="2">
+									<option value="{{unit.id}}" ng-repeat="unit in units">{{unit.name}}</option>
+							</select>
+						</tr>
+						<tr>
+							<td width="20%" align="left"><label>Descripción</label></td>
+							<td align="left"><textarea rows="2" cols="40" tabindex="3"></textarea></td>
+						</tr>
+						<tr>
+							<td width="20%" align="left"><label>Precio Unitario</label></td>
+							<td align="left">$<input type="number" min="0" step="0.01"
+								dir="rtl" tabindex="4"></td>
+						</tr>
+						<tr>
+							<td width="20%" align="left"><label>Precio Total</label></td>
+							<td align="left">$<input type="number" min="0" step="0.01"
+								dir="rtl" tabindex="5"></td>
+						</tr>
+					</table>
+					<div class="modal-footer">
+						<button type="button" ng-click="closeDetail()"
+							class="btn btn-default" data-dismiss="modal" tabindex="7">Cerrar</button>
+						<input type='submit' class="btn btn-primary" value="Aceptar"
+							tabindex="6" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- INICIO MODAL PROYECTO -->
+<div id="modalProyectId" ng-show="modalProyect" class="ng-modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" ng-click="closeProyect()" class="close"
+				data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Asignar OC</h4>
+		</div>
+		<div class="modal-body">
+			<div class="text-center">
+				<form name="form-change-proyect" id="formChangeProyect"
+					ng-submit="closeProyect()">
+					<table ng-table="tableSelectProyect"
+						class="table table-striped table-bordered table-hover">
+						<tr>
+							<th width="5%" align="left">Elegir</th>
+							<th width="20%" align="left">ID Proyecto</th>
+							<th width="75%" align="left">Nombre Proyecto</th>
+						</tr>
+						<tr ng-repeat="proyect in $data">
+							<td><input type="checkbox" checked="checked"></td>
+							<td>{{proyect.id}}</td>
+							<td>{{proyect.name}}</td>
+						</tr>
+					</table>
+					<div class="modal-footer">
+						<button type="button" ng-click="closeProyect()"
+							class="btn btn-default" data-dismiss="modal" tabindex="5">Cerrar</button>
+						<input type='submit' class="btn btn-primary" value="Aceptar"
+							tabindex="4" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- FIN MODAL PROYECTO -->

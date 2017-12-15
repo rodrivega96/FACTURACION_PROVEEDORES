@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.vates.facpro</groupId>
+        <artifactId>facpro-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>facpro-backend</artifactId>
+    <packaging>war</packaging>
+
+    <name>FACPRO Backend server</name>
+    <description>Server where FACPRO web services are published so that they can be consumed by FACPRO frontend application.</description>
+
+    <properties>
+        <jackson.version>1.9.13</jackson.version>
+        <cxf.version>2.7.11</cxf.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- Services API -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>facpro-service-api-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Security -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>facpro-security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Persistence implementation -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>facpro-persistence-api-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- CXF dependencies -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-extension-providers</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jettison</groupId>
+            <artifactId>jettison</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+        </dependency>
+
+
+			
+			
+        <!-- Spring Web dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/${project.artifactId}</contextPath>
+                    </webApp>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>
